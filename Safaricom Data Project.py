@@ -12,7 +12,8 @@ import sys
 sys.modules['warnings'] = warnings
 st.set_page_config(
     page_title= "m-pesa Analysis",
-    page_icon= ":bar_char:"
+    page_icon= ":bar_chart:",
+    layout= "wide"
 )
 @st.cache_data
 def data_store():
