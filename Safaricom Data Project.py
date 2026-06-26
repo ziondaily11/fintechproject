@@ -138,11 +138,11 @@ def show_home():
         )= calc(saf_data)
     def format_number(num):
         if num >= 1_000_000_000:
-            return f"${num/1_000_000_000:.1f}B"
+            return f"KES{num/1_000_000_000:.1f}B"
         elif num >= 1_000_000:
-            return f"${num/1_000_000:.1f}M"
+            return f"KES{num/1_000_000:.1f}M"
         elif num >= 1_000:
-            return f"${num/1_000:.1f}K"
+            return f"KES{num/1_000:.1f}K"
         return str(num)
     st.markdown("""
         <style>
@@ -167,4 +167,6 @@ def show_home():
     lef, mid_lef, mid, righ= st.columns(4)
     with lef:
         st.metric(label= "Total Transactions", value= f"{total_transactions:,}")
+    with mid_lef:
+        st.metric(label= "Total Volume", value= format_number(total_volume) )
 show_home()
