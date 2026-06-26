@@ -144,6 +144,27 @@ def show_home():
         elif num >= 1_000:
             return f"${num/1_000:.1f}K"
         return str(num)
+    st.markdown("""
+        <style>
+            [data-testid="stMetric"] {
+                background-color: #0E0D0B;
+                border: 1px solid #333;
+                border-radius: 10px;
+                padding: 20px;
+            }
+            [data-testid="stMetricLabel"] {
+                color: #F4F2F1;
+                font-size: 16px;
+            }
+            [data-testid="stMetricValue"] {
+                color: #F4F2F1;
+                font-size: 28px;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+    
    
-
+    lef, mid_lef, mid, righ, mid_righ, far_righ= st.columns(6)
+    with lef:
+        st.metric(label= "Total Transactions", value= total_transactions)
 show_home()
