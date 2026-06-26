@@ -138,11 +138,11 @@ def show_home():
         )= calc(saf_data)
     def format_number(num):
         if num >= 1_000_000_000:
-            return f"KES{num/1_000_000_000:.1f}B"
+            return f"{num/1_000_000_000:.1f}B"
         elif num >= 1_000_000:
-            return f"KES{num/1_000_000:.1f}M"
+            return f"{num/1_000_000:.1f}M"
         elif num >= 1_000:
-            return f"KES{num/1_000:.1f}K"
+            return f"{num/1_000:.1f}K"
         return str(num)
     st.markdown("""
         <style>
