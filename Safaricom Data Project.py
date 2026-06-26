@@ -102,11 +102,16 @@ def calc(saf_data):
             amount_dist
         )
 def show_home():
-    col1, col2= st.columns([2, 8])
+    col1, col2= st.columns([2, 8], vertical_alignment= "center")
     with col1:
       st.image(Path(__file__).parent / "SAF-MAIN-LOGO.png")
     with col2:
-        st.write("M-pesa Analysis")
+        st.markdown("""
+                <h1 style="color: #ff4500; font-family: Courier New, monospace; 
+                        font-size:30px">
+                    M-pesa Analysis
+                </h1>
+            """, unsafe_allow_html=True)
       
     saf_data= data_store()
     (
