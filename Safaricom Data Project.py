@@ -119,15 +119,6 @@ def calc(saf_data):
             amount_dist
         )
 def show_home():
-     "SAF-MAIN-LOGO.png")
-    with col2:
-        st.markdown("""
-                <h1 style="color: #288C1D; font-family: Courier New, monospace; 
-                        font-size:30px">
-                    M-pesa Analysis
-                </h1>
-            """, unsafe_allow_html=True)
-      
     saf_data= data_store()
     (
             total_transactions,
