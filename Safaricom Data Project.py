@@ -9,6 +9,13 @@ from streamlit_option_menu import option_menu
 from pathlib import Path  
 import warnings
 import sys 
+st.markdown("""
+    <style>
+        .block-container {
+            padding-top: 1rem;
+        }
+    </style>
+""", unsafe_allow_html=True)
 sys.modules['warnings'] = warnings
 st.set_page_config(
     page_title= "m-pesa Analysis",
