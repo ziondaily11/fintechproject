@@ -105,6 +105,9 @@ def show_home():
     col1, col2= st.columns([2, 8])
     with col1:
       st.image(Path(__file__).parent / "SAF-MAIN-LOGO.png")
+    with col2:
+        st.write("M-pesa Analysis")
+      
     saf_data= data_store()
     (
             total_transactions,
