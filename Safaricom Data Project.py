@@ -17,12 +17,12 @@ def get_image_base64(path):
     with open(path, "rb") as f:
         return base64.b64encode(f.read()).decode()
 
-logo = get_image_base64("SAF-MAIN-LOGO.png")  # your actual filename here
-
+logo = get_image_base64("SAF-MAIN-LOGO.png")  
 st.markdown(f"""
     <div style="display:flex; align-items:center; gap:10px; margin-bottom:1rem;">
         <img src="data:image/png;base64,{logo}" width="150">
-        <h2 style="color:green; margin:0;">M-Pesa Analysis</h2>
+        <h2 style="color:#288C1D; font-family:'Courier New', monospace; 
+                   font-size:30px; margin:0;">M-Pesa Analysis</h2>
     </div>
 """, unsafe_allow_html=True)
 st.set_page_config(
@@ -119,7 +119,15 @@ def calc(saf_data):
             amount_dist
         )
 def show_home():
-     
+     "SAF-MAIN-LOGO.png")
+    with col2:
+        st.markdown("""
+                <h1 style="color: #288C1D; font-family: Courier New, monospace; 
+                        font-size:30px">
+                    M-pesa Analysis
+                </h1>
+            """, unsafe_allow_html=True)
+      
     saf_data= data_store()
     (
             total_transactions,
