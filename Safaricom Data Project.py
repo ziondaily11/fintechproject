@@ -247,7 +247,9 @@ def show_home():
         )
     #GRAPHS
     #fraude rate per amount
+
     fraud_rate_bar= px.bar(
+         fraud_rate_per_amount,
         x= fraud_rate_per_amount.sort_index,
         y= fraud_rate_per_amount.values
     )
