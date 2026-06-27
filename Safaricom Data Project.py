@@ -227,7 +227,7 @@ def show_home():
     with rig:
        st.metric(label= "Avg. Fraud Amount", 
        value= (f"KES {round(fraud_avg):,}"),
-       delta= f"{fraud_avg/legit_avg}x larger than legit",
+       delta= f"{round(fraud_avg/legit_avg, 2)}x larger than legit",
         delta_color= "inverse"
        )
     with col:
