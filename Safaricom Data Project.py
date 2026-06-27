@@ -256,6 +256,7 @@ def show_home():
         title= "<b>Fraud rate by transaction amount</b>"
     )
     fraud_rate_bar.update_layout(
+        height= 200,
         yaxis= dict(
             ticksuffix= "%",
             title= None,
