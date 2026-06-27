@@ -245,4 +245,12 @@ def show_home():
         st.write(
           "🔍 Biggest finding: Fraudulent transactions are on average 72% larger than legitimate ones (KES 2,535 vs KES 1,476). And for transactions above KES 5,000, the fraud rate shoots to 9.65% — nearly 1 in 10. Kenyans sending big money are the primary target."  
         )
+    #GRAPHS
+    #fraude rate per amount
+    fraud_rate_bar= px.bar(
+        x= fraud_rate_per_amount.sort_index,
+        y= fraud_rate_per_amount.values
+    )
+    st.plotly_chart(fraud_rate_bar)
+
 show_home()
