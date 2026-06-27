@@ -241,5 +241,8 @@ def show_home():
          value= f"{peak_hour-12} PM",
          delta= f"Hour {peak_hour}--{peak_hour_counts} cases",
          delta_color= "inverse")
-    st.container(border= True)
+    with st.container(border= True):
+        st.write(
+          "🔍 Biggest finding: Fraudulent transactions are on average 72% larger than legitimate ones (KES 2,535 vs KES 1,476). And for transactions above KES 5,000, the fraud rate shoots to 9.65% — nearly 1 in 10. Kenyans sending big money are the primary target."  
+        )
 show_home()
