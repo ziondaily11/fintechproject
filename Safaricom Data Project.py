@@ -205,21 +205,21 @@ def show_home():
     
     
     lef, mid_lef, mid, mid_righ, rig, col = st.columns(6)
-    with lef:
-        st.metric(label= "Total Transactions", value= f"{total_transactions:,}")
-    with mid_lef:
-        st.metric(label= "Total Volume", value= f"KES {format_number(total_volume)}")
-    with mid:
-        st.metric(label="Fraud Rate", value=f"{fraud_rate}%",
-        delta= f"{fraud_count}flagged txns")
-    with mid_righ:
-        st.markdown("""
+    st.markdown("""
         <style>
         [data-testid="stMetricDelta"] svg {
             display: none;
         }
         </style>
         """, unsafe_allow_html=True)
+    with lef:
+        st.metric(label= "Total Transactions", value= f"{total_transactions:,}")
+    with mid_lef:
+        st.metric(label= "Total Volume", value= f"KES {format_number(total_volume)}")
+    with mid:
+        st.metric(label="Fraud Rate", value=f"{fraud_rate}%",
+        delta= f"{fraud_count} flagged txns")
+    with mid_righ:
         st.metric(label= "Avg. legitimate Amount",
         value= (f"KES {round(legit_avg):,}"),
         delta= "per transaction")
