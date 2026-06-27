@@ -213,7 +213,7 @@ def show_home():
         st.metric(label= st.markdown("""
                 <h1 style="color: #EC1322; font-family: Courier New, monospace; 
                         font-size:10px">
-                    Fraud 
+                    Fraud Rate
                 </h1>
             """, unsafe_allow_html=True), value= (f"{fraud_rate}%") )
     with mid_righ:
