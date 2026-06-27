@@ -215,7 +215,7 @@ def show_home():
     with mid_lef:
         st.metric(label= "Total Volume", value= f"KES {format_number(total_volume)}")
     with mid:
-        st.metric(label= text, value= (f"{fraud_rate}%"))
+        st.metric(label= st.write(text), value= (f"{fraud_rate}%"))
     with mid_righ:
         st.metric(label= "Avg. legitimate Amount", value= (f"KES {round(legit_avg):,}"))
     with rig:
