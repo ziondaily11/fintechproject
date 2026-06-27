@@ -212,7 +212,7 @@ def show_home():
     with mid:
         st.metric(label="Fraud Rate", value=f"{fraud_rate}%")
     with mid_righ:
-        st.metric(label= "Avg. legitimate Amount", value= (f"KES {round(legit_avg):,}"))
+        st.metric(label= "Avg. legitimate Amount", value= (f"KES {round(legit_avg):,}"), delta= "per transaction")
     with rig:
        st.metric(label= "Avg. Fraud Amount", value= (f"KES {round(fraud_avg):,}"))
     with col:
