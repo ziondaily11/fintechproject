@@ -210,12 +210,13 @@ def show_home():
     with mid_lef:
         st.metric(label= "Total Volume", value= f"KES {format_number(total_volume)}")
     with mid:
-        st.metric(label= st.markdown("""
+         st.markdown("""
                 <h1 style="color: #EC1322; font-family: Courier New, monospace; 
                         font-size:10px">
                     Fraud Rate
                 </h1>
-            """, unsafe_allow_html=True), value= (f"{fraud_rate}%") )
+            """, unsafe_allow_html=True)
+            st.metric(label= "", value= (f"{fraud_rate}%") )
     with mid_righ:
         st.metric(label= "Avg. legitimate Amount", value= (f"KES {round(legit_avg):,}"))
     with rig:
