@@ -254,6 +254,16 @@ def show_home():
         y= fraud_rate_per_amount.values,
         title= "<b>Fraud rate by transaction amount</b>"
     )
+    fraud_rate_bar.update_layout(
+        yaxis= dict(
+            title= None
+            showgrid= False
+        ),
+        xaxis= dict(
+            title= None
+            showgrid= False
+        )
+    )
     with col, col1= st.columns(2)
     with col:
         with st.container(border= True):
