@@ -241,5 +241,5 @@ def show_home():
          value= f"{peak_hour-12} PM",
          delta= f"Hour {peak_hour}--{peak_hour_counts} cases",
          delta_color= "inverse")
-    st.container()
+    st.container(border= True)
 show_home()
