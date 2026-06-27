@@ -210,13 +210,6 @@ def show_home():
     with mid_lef:
         st.metric(label= "Total Volume", value= f"KES {format_number(total_volume)}")
     with mid:
-        st.markdown("""
-            <style>
-            div[data-testid="stMetric"]:nth-of-type(2) [data-testid="stMetricLabel"] p {
-                color: #EC1322 !important;
-            }
-            </style>
-        """, unsafe_allow_html=True)
         st.metric(label="Fraud Rate", value=f"{fraud_rate}%")
     with mid_righ:
         st.metric(label= "Avg. legitimate Amount", value= (f"KES {round(legit_avg):,}"))
