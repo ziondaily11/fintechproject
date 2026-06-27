@@ -212,10 +212,8 @@ def show_home():
     with mid:
         st.markdown("""
             <style>
-            [data-testid="stMetricLabel"] p {
+            div[data-testid="stMetric"]:nth-of-type(2) [data-testid="stMetricLabel"] p {
                 color: #EC1322 !important;
-                font-family: Courier New, monospace;
-                font-size: 10px;
             }
             </style>
         """, unsafe_allow_html=True)
