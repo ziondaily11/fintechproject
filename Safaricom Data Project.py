@@ -316,7 +316,7 @@ def show_home():
         textposition= "outside"
     ))
     col, col1= st.columns(2)
-    column1, column2= st.columns(3)
+    column1, column2= st.columns(2)
 
     with col:
         with st.container(border= True):
