@@ -308,7 +308,7 @@ def show_home():
     )
     #transaction split pie
 
-    transaction_split_pie= go.Figure(go.pie(
+    transaction_split_pie= go.Figure(go.Pie(
         labels= transaction_split.index,
         values= transaction_split.values,
         hole= 0.7,
