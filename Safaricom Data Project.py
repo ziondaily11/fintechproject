@@ -317,9 +317,6 @@ def show_home():
         marker_colors=["#1D9E75", "#BA7517", "#D85A30"]
     ))
     col, col1= st.columns(2)
-    st.markdown("#")
-    column1, column2= st.columns(2)
-
     with col:
         with st.container(border= True):
             st.plotly_chart(fraud_rate_bar)
@@ -327,6 +324,10 @@ def show_home():
     with col1:
         with st.container(border= True):
             st.plotly_chart(fraud_region)
+    
+    column1, column2= st.columns(2)
+
+    
     with column1:
         with st.container(border= True):
             st.plotly_chart(transaction_split_pie)
