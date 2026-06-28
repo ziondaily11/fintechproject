@@ -285,8 +285,8 @@ def show_home():
     )
     fraud_region= px.bar(
         fraud_rate_region,
-        x= "region"
-        y= "is_fraud"
+        x= "region",
+        y= "is_fraud",
         title= "<b> Fraud Rate Per Region</b>"
 
     )
