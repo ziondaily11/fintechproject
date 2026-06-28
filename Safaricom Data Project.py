@@ -311,3 +311,4 @@ def show_home():
     with col1:
         with st.container(border= True):
             st.plotly_chart(fraud_region)
+show_home()
