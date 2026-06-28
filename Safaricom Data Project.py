@@ -283,6 +283,25 @@ def show_home():
             showgrid= False
         )
     )
+    fraud_region= px.bar(
+        fraud_rate_region,
+        x= "region"
+        y= "is_fraud"
+        title= "<b> Fraud Rate Per Region</b>"
+
+    )
+
+    fraud_region.update_layout(
+        margin= dict(t= 40, b= 10, l= 10, r= 10),
+        xaxis= dict(
+            showgrid= False,
+            title= None,
+        ),
+        yaxis= dict(
+            ticksuffix= "%",
+            title= None
+        ),
+    )
     col, col1= st.columns(2)
 
     with col:
@@ -291,5 +310,4 @@ def show_home():
         
     with col1:
         with st.container(border= True):
-            st.dataframe(fraud_rate_region)
-show_home()
+            st.plotly_chart(fraud_region)
