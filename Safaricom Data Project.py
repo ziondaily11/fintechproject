@@ -312,7 +312,7 @@ def show_home():
         labels= transaction_split.index,
         values= transaction_split.values,
         hole= 0.7,
-        textinfo= "label"
+        textinfo= "label",
         textposition= "outside"
     ))
     col, col1= st.columns(2)
