@@ -194,7 +194,6 @@ def show_home():
     """, unsafe_allow_html=True)
     
     
-    lef, mid_lef, mid, mid_righ, rig, col = st.columns(6)
     st.markdown("""
         <style>
         [data-testid="stMetricDelta"] svg {
@@ -203,6 +202,7 @@ def show_home():
         </style>
         """, unsafe_allow_html=True)
     col1, col2 = st.columns([2, 8], vertical_alignment= "center")
+    lef, mid_lef, mid, mid_righ, rig, col = st.columns(6)
     with col1:
         st.image(Path(__file__).parent /"SAF-MAIN-LOGO.png")
     with col2:
