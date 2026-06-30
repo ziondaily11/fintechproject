@@ -429,7 +429,7 @@ def show_home():
             line=dict(
                 shape="spline",
                 width=3,
-                color="#E24B4A",
+                color="#F8240C",
                 dash="dashdot"
             ),
             hovertemplate="<b>Hour %{x}:00</b><br>Fraud Rate: %{y:.2f}%<extra></extra>"
