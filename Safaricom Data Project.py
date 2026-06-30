@@ -303,6 +303,7 @@ def show_home():
             title= None,
         ),
         yaxis= dict(
+            range= [2, 3]
             ticksuffix= "%",
             title= None
         ),
