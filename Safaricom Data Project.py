@@ -347,7 +347,8 @@ def show_home():
         x= tran_per_hour.index,
         y= tran_per_hour.values,
         title= "Transaction by Hour of the Day",
-        markers= True
+        markers= True,
+        color_discrete_sequence= ["#90F269"]
     )
     hourly_tran_bar.update_traces(
         line= dict(
