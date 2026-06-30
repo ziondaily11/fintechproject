@@ -332,7 +332,7 @@ def show_home():
                 ),
         legend= dict(
             orientation= "h",
-            yanchor= "bottom",
+            yanchor= "top",
             y= 0.85,
             xanchor= "center",
             x= 0.5
