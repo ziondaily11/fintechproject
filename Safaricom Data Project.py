@@ -404,7 +404,7 @@ def show_home():
 
     #fraude rate per hour + transaction amount per hour
 
-    fig.msp(specs= [[{"secondary_": True}]])
+    fig= msp(specs= [[{"secondary_": True}]])
     fig.add_traces(
         go.scatter(
             tran_per_hour,
