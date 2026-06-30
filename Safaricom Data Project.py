@@ -422,7 +422,7 @@ def show_home():
 
     fig.add_trace(trace, secondary_y=False)
     fig.update_layout(
-        title= "Transactions CVS Fraude Rate by Hour",
+        title_text= "Transactions VS Fraude Rate by Hour",
         template= "plotly_dark",
         hovermode= "x unified",
 
