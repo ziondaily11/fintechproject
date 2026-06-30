@@ -366,7 +366,8 @@ def show_home():
         yaxis= dict(
             range= [4700, 5200],
             showgrid= False,
-            title= None
+            title= None,
+            tickformat= "~s"
         )
     )
     amount_dist_bar= px.bar(
