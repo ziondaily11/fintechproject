@@ -406,7 +406,7 @@ def show_home():
 
     fig= msp(specs= [[{"secondary_y": True}]])
     fig.add_traces(
-        go.scatter(
+        go.Scatter(
             tran_per_hour,
             x= tran_per_hour.index,
             y= tran_per_hour.values,
