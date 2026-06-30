@@ -355,6 +355,16 @@ def show_home():
             color= "#1D9E75"
         )
     )
+    hourly_tran_bar.update_layout(
+        xaxis= dict(
+            showgrid= False,
+            title= None
+        ),
+        yaxis= dict(
+            showgrid= False,
+            title= None
+        )
+    )
     amount_dist_bar= px.bar(
         amount_dist,
         x= amount_dist.index,
