@@ -323,7 +323,8 @@ def show_home():
         domain= dict(x=[0.1, 0.7], y=[0.1, 0.7])
         )
     transaction_split_pie.update_layout(
-        margin= dict(t= 40, b= 10, l= 10, r= 10)
+        margin= dict(t= 40, b= 10, l= 10, r= 10),
+        showlegend= False
     )
     col, col1= st.columns(2)
     with col:
