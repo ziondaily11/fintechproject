@@ -438,6 +438,7 @@ def show_home():
     fig.add_trace(fraud_trace, secondary_y=True)
     fig.update_layout(
         title= "Transactions VS Fraude Rate by Hour",
+        title_font_color= "#618948",
         template= "plotly_dark",
         hovermode= "x unified",
 
