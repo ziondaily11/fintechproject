@@ -330,7 +330,7 @@ def show_home():
                 font= dict(color= "#618948")
                 ),
         
-        height= 230,
+        height= 260,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
         annotations= [dict(
             text= "Transaction Type Split",
