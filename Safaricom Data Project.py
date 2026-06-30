@@ -417,7 +417,7 @@ def show_home():
                 shape= "spline",
                 width= 3,
                 color= "#18c29c",
-                marker= dict(size= 7)
+                marker= dict(size= 7),
                 hovertemplate= "<b>Hour %{x}:00</b><br>Transactions: %{y}<extra></extra>"
         ),
         secondary_y= False
