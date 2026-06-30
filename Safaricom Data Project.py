@@ -325,7 +325,10 @@ def show_home():
         domain= dict(x=[0.1, 0.9], y=[0.1, 0.9])
         )
     transaction_split_pie.update_layout(
-        title= "<b>Transaction Type Split</b>",
+        title= dict(
+                text= "<b>Transaction Type Split</b>",
+                x= 0
+                y= 0.97),
         legend= dict(
             orientation= "h",
             yanchor= "bottom",
