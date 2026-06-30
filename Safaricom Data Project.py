@@ -438,7 +438,7 @@ def show_home():
     fig.add_trace(fraud_trace, secondary_y=True)
     fig.update_layout(
         title= "Transactions VS Fraude Rate by Hour",
-        title_font_color= "#618948",
+        title_font= dict(color= "#618948"),
         template= "plotly_dark",
         hovermode= "x unified",
 
@@ -452,12 +452,14 @@ def show_home():
     )
     fig.update_yaxes(
         title= "Transaction AMT",
+        title_font_color= "#18c29c",
         range= [4700, 5200],
         tickformat= "~s",
         secondary_y= False
     )
     fig.update_yaxes(
         title= "Fraud Rate",
+        title_font= dict(color= "#F8240C"),
         ticksuffix= "%",
         secondary_y= True
     )
