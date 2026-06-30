@@ -289,7 +289,7 @@ def show_home():
         y= "is_fraud",
         title= "<b> Fraud Rate Per Region</b>",
         color= "region",
-        color_discrete_sequence=["#BA7517", "#791F1F" "#D85A30", "#1D9E75", "#E24B4A"]
+        color_discrete_sequence=["#1D9E75", "#BA7517", "#D85A30", "#E24B4A", "#791F1F"]
 
     )
 
@@ -327,7 +327,7 @@ def show_home():
                 text= "<b>Transaction Type Split</b>",
                 x= 0,
                 y= 0.97,
-                font= dict(color= "#76A758")
+                font= dict(color= "#618948")
                 ),
         
         height= 230,
