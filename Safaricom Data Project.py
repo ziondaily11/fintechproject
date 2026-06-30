@@ -334,7 +334,7 @@ def show_home():
         height= 260,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
         annotations= [dict(
-            text= "Transaction Type Split",
+            text= "120,000 txns",
             x= 0.5, y= 0.5,
             font_size= 10,
             showarrow= False
