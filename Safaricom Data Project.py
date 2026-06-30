@@ -317,8 +317,6 @@ def show_home():
         values= transaction_split.values,
         hole= 0.7,
         title= "<b>Transaction Type Split</b>",
-        textinfo= "label",
-        textposition= "outside",
         marker_colors=["#1D9E75", "#BA7517", "#D85A30"]
     ))
     transaction_split_pie.update_traces(
