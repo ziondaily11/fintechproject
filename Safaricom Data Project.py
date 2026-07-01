@@ -93,7 +93,12 @@ def calc(saf_data):
 
         device_per_region= (
             saf_data.groupby(["region", "device_type"]).size()
-        )  
+        )
+        #phone distribution by region
+        phone_dist= (saf_data.groupby(["region", "device_type"])
+        .size()
+        .reset_index(name= "count")
+        )
         return (
             total_transactions,
             total_volume,
@@ -116,7 +121,8 @@ def calc(saf_data):
             peak_hour_counts,
             amount_dist,
             fraud_rate_region,
-            fraud_rate_hour
+            fraud_rate_hour,
+            phone_dist
         )
 st.cache_data(ttl=90)
 def show_home():
@@ -176,7 +182,8 @@ def show_home():
             peak_hour_counts,
             amount_dist,
             fraud_rate_region,
-            fraud_rate_hour
+            fraud_rate_hour,
+            phone_dist
         )= calc(saf_data)
     def format_number(num):
         if num >= 1_000_000_000:
@@ -485,6 +492,15 @@ def show_home():
         tickmode= "linear",
         dtick= 2
     )
+    #phone distribution bar
+    phone_dist_bar= px.bar(
+        phone_dist,
+        x= "region",
+        y= "count",
+        color= "device_type"
+        color_discrete_sequence=["#BA7517", "#D85A30"]
+        barmode= "stack"
+    )
 
     col, col1, col_c= st.columns(3)
     with col:
@@ -508,6 +524,7 @@ def show_home():
         with st.container(border= True):
             st.plotly_chart(fig)
     st.info("📱 Device split insight: Feature phones and smartphones are almost exactly 50/50 (50.3% vs 49.7%) across all regions — showing M-Pesa's penetration across all economic levels. Nakuru has the highest smartphone fraud rate at 3.12%, while Kisumu feature phones are the lowest at 2.68%.")
-            
+    with st.container(border= True):
+        st.plotly_chart(phone_dist_bar)     
 
 show_home()
