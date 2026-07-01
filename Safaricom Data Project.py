@@ -229,7 +229,7 @@ def show_home():
                 st.image(Path(__file__).parent / "projectlogo.png", width=140)
             with col2:
                 st.markdown("""
-                    <h1 style="color: #288C1D; font-family: Courier New, monospace;
+                    <h1 style="color: #9E1405; font-family: Courier New, monospace;
                         font-size:30px; margin: 0; padding: 0;">
                         FINPULSE REPORT
                     </h1>
