@@ -448,6 +448,8 @@ def show_home():
                 color="#F8240C",
                 dash="dashdot"
             ),
+            fill="tozeroy",                         
+            fillcolor="rgba(255, 0, 0, 0.15)"
             hovertemplate="<b>Hour %{x}:00</b><br>Fraud Rate: %{y:.2f}%<extra></extra>"
         )
 
@@ -482,7 +484,7 @@ def show_home():
     fig.update_xaxes(
         ticksuffix= "h",
         tickmode= "linear",
-        dtick= 1
+        dtick= 2
     )
 
     col, col1, col_c= st.columns(3)
