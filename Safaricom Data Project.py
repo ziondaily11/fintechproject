@@ -297,7 +297,8 @@ def show_home():
         xaxis= dict(
             title= None,
             showgrid= False
-        )
+        ),
+        bargap= 0.3
     )
     fraud_region= px.bar(
         fraud_rate_region,
@@ -323,6 +324,7 @@ def show_home():
             ticksuffix= "%",
             title= None
         ),
+        bargap= 0.3
     )
     #transaction split pie
     label_with_count= [
@@ -410,7 +412,8 @@ def show_home():
         xaxis= dict(
             title= None,
             showgrid= False
-        )
+        ),
+        bargap= 0.3
     )
 
     #fraude rate per hour + transaction amount per hour
