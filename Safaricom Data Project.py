@@ -533,12 +533,15 @@ def show_home():
         Trans_daily,
         x= "day",
         y="count",
+        category_orders={"day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]}
         title= "Transaction Volume By Day",
         color= "day",
         color_discrete_sequence= ["#1D9E75", "#378ADD", "#BA7517", "#50504B", "#D85A30", "#7F77DD", "#E24B4A"]
         )
     
     trans_daily_bar.update_layout(
+        height= 300,
+        margin= dict(t= 40, b= 10, l= 10, r= 10),
         title_font= dict(color= "#BA7517"),
         showlegend= False,
         yaxis= dict(
@@ -563,6 +566,8 @@ def show_home():
         color_discrete_map= colors
 )
     fraud_count_bar.update_layout(
+        height= 300,
+        margin= dict(t= 40, b= 10, l= 10, r= 10),
         title_font= dict(color= "#BA7517"),
         showlegend= False,
         yaxis= dict(
@@ -571,7 +576,8 @@ def show_home():
         ),
         xaxis= dict(
             title= None,
-            showgrid= False
+            showgrid= False,
+            dtick= 2
         )
     )
     
@@ -597,7 +603,9 @@ def show_home():
         with st.container(border= True):
             st.plotly_chart(fig)
     st.info("📱 Device split insight: Feature phones and smartphones are almost exactly 50/50 (50.3% vs 49.7%) across all regions — showing M-Pesa's penetration across all economic levels. Nakuru has the highest smartphone fraud rate at 3.12%, while Kisumu feature phones are the lowest at 2.68%.")
-    bar_col2,  bar_col3= st.columns([0.8,  2.3])
+    st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)  
+    bar_col2,  bar_col3= st.columns([2, 3])
+
     #with bar_col1:
         #with st.container(border= True):
             #st.plotly_chart(phone_dist_bar)   
