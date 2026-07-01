@@ -215,25 +215,25 @@ def show_home():
         """, unsafe_allow_html=True)
     
     
-    with st.container(border= True):
-            col1, col2 = st.columns([0.3, 2.7], vertical_alignment= "center", gap="small")
-            with col1:
-                st.image(Path(__file__).parent / "projectlogo.png", width=140)
-            with col2:
-                st.markdown("""
-                    <h1 style="color: #9E1405; font-family: Courier New, monospace;
-                        font-size:30px; margin: 0; padding: 0;">
-                        FINPULSE REPORT
-                    </h1>
+    
+    col1, col2 = st.columns([0.3, 2.7], vertical_alignment= "center", gap="small")
+    with col1:
+        st.image(Path(__file__).parent / "projectlogo.png", width=140)
+    with col2:
+        st.markdown("""
+            <h1 style="color: #9E1405; font-family: Courier New, monospace;
+                font-size:30px; margin: 0; padding: 0;">
+                FINPULSE REPORT
+            </h1>
+        """, unsafe_allow_html=True)
+    st.markdown("""
+                    <style>
+                        div[data-testid="stVerticalBlock"]:has(div.st-key-logo_header) div[data-testid="stHorizontalBlock"] {
+                            gap: 0rem;
+                        }
+                    </style>
                 """, unsafe_allow_html=True)
-            st.markdown("""
-                            <style>
-                                div[data-testid="stVerticalBlock"]:has(div.st-key-logo_header) div[data-testid="stHorizontalBlock"] {
-                                    gap: 0rem;
-                                }
-                            </style>
-                        """, unsafe_allow_html=True)
-            st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
     lef, mid_lef, mid, mid_righ, rig, col = st.columns(6)
     with lef:
         st.metric(label= "Total Transactions", 
