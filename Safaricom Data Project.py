@@ -562,7 +562,7 @@ def show_home():
         color= "hour",
         color_discrete_map=colors,
 )
-    fraud_count_bar..update_layout(
+    fraud_count_bar.update_layout(
         title_font= dict(color= "#BA7517"),
         showlegend= False,
         yaxis= dict(
