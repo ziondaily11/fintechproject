@@ -219,7 +219,7 @@ def show_home():
     with col2:
         st.markdown("""
                 <h1 style="color: #288C1D; font-family: Courier New, monospace; 
-                        font-size:-30px">
+                        font-size:30px">
                     FINPULSE REPORT
                 </h1>
             """, unsafe_allow_html=True)
