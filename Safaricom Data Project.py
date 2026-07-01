@@ -498,7 +498,7 @@ def show_home():
         with st.container(border= True):
             st.plotly_chart(fraud_region)
             
-    bar_col, area_col= st.columns([0.5, 2.5])
+    bar_col, area_col= st.columns([0.8, 2.2])
     with bar_col:
         with st.container(border= True):
             st.plotly_chart(fraud_rate_bar)
