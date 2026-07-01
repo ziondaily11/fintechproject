@@ -498,8 +498,21 @@ def show_home():
         x= "region",
         y= "count",
         color="device_type",
-        color_discrete_sequence=["#BA7517", "#D85A30"],
-        barmode= "stack"
+        color_discrete_sequence=["#1D9E75", "#BA7517"],
+        barmode= "stack",
+        title= "FEATURE PHONE VS SMARTPHONE BY REGION"
+    )
+    phone_dist_bar.update_layout(
+        title_font= dict(color= "#BA7517"),
+        showlegend= False,
+        yaxis= dict(
+            title= None
+            showgrid= False
+        ),
+        xaxis= dict(
+            title= None
+            showgrid= False
+        )
     )
 
     col, col1, col_c= st.columns(3)
