@@ -552,14 +552,15 @@ def show_home():
         )
     )
     #FRAUD hourly counts bar 
-    
+    colors = {str(hour): "#E24B4A" if hour in [4, 21] else "#888780" 
+          for hour in fraud_hourly_counts["hour"]}
     fraud_count_bar= px.bar(
         fraud_hourly_counts,
         x= "hour",
         y= "count",
         title= "Fraud Counts By Hour Of Day",
-        color= "hour",
-        color_discrete_sequence=["#808080"]
+        color= fraud_hourly_counts["hour"].astype(str),
+        color_discrete_map= colors
 )
     fraud_count_bar.update_layout(
         title_font= dict(color= "#BA7517"),
