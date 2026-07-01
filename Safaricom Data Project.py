@@ -107,7 +107,7 @@ def calc(saf_data):
             .reset_index(name="count")
             .rename(columns={"day_of_week": "day"})
         )
-        Trans_daily.columns= ["day", "count"]
+        Trans_daily= Trans_daily.sort_values("day")
         return (
             total_transactions,
             total_volume,
@@ -319,7 +319,7 @@ def show_home():
             title= None,
             showgrid= False
         ),
-        bargap= 0.2
+        #bargap= 0.2
     )
     fraud_region= px.bar(
         fraud_rate_region,
@@ -330,7 +330,7 @@ def show_home():
         color_discrete_sequence=["#D85A30", "#E24B4A", "#791F1F", "#1D9E75", "#BA7517"]
 
     )
-    fraud_region.update_traces(width= 0.45)
+    #fraud_region.update_traces(width= 0.45)
     fraud_region.update_layout(
         title_font_color= "#F4170B",
         height= 250,
@@ -345,7 +345,7 @@ def show_home():
             ticksuffix= "%",
             title= None
         ),
-        bargap= 0.1
+        #bargap= 0.1
     )
     #transaction split pie
     label_with_count= [
@@ -422,7 +422,7 @@ def show_home():
         color_discrete_sequence=["#1D9E75", "#BA7517", "#D85A30", "#E24B4A", "#791F1F"]
 
     )
-    amount_dist_bar.update_traces(width= 0.45)
+    #amount_dist_bar.update_traces(width= 0.45)
     amount_dist_bar.update_layout(
         height= 250,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
@@ -535,6 +535,18 @@ def show_home():
         color= "day",
         color_discrete_sequence= ["#1D9E75", "#378ADD", "#BA7517", "#50504B", "#D85A30", "#7F77DD", "#E24B4A"]
         )
+    trans_daily_bar.update_layout(
+        title_font= dict(color= "#BA7517"),
+        showlegend= False,
+        yaxis= dict(
+            title= None,
+            showgrid= False
+        ),
+        xaxis= dict(
+            title= None,
+            showgrid= False
+        )
+    )
 
     col, col1, col_c= st.columns(3)
     with col:
