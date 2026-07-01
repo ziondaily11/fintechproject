@@ -533,7 +533,7 @@ def show_home():
         Trans_daily,
         x= "day",
         y="count",
-        category_orders={"day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]}
+        category_orders={"day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]},
         title= "Transaction Volume By Day",
         color= "day",
         color_discrete_sequence= ["#1D9E75", "#378ADD", "#BA7517", "#50504B", "#D85A30", "#7F77DD", "#E24B4A"]
