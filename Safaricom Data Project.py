@@ -215,7 +215,14 @@ def show_home():
     col1, col2 = st.columns([2, 8], vertical_alignment= "center")
     lef, mid_lef, mid, mid_righ, rig, col = st.columns(6)
     with col1:
-        st.image(Path(__file__).parent /"projectlogo.png", caption= "FINPLUSE", width= 140)
+        st.image(Path(__file__).parent /"projectlogo.png", width= 140)
+    with col2:
+        st.markdown("""
+                <h1 style="color: #288C1D; font-family: Courier New, monospace; 
+                        font-size:30px">
+                    FINPULSE REPORT
+                </h1>
+            """, unsafe_allow_html=True)
     
     with lef:
         st.metric(label= "Total Transactions", 
