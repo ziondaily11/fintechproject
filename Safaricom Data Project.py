@@ -283,7 +283,8 @@ def show_home():
         title= "<b>Fraud rate by transaction amount</b>",
         color=fraud_rate_per_amount.index,
         color_discrete_sequence=["#1D9E75", "#BA7517", "#D85A30", "#E24B4A", "#791F1F"]
-)
+    )
+    fraud_rate_bar.update_traces(width= 0.4)
 
     fraud_rate_bar.update_layout(
         height= 300,
@@ -309,7 +310,7 @@ def show_home():
         color_discrete_sequence=["#D85A30", "#E24B4A", "#791F1F", "#1D9E75", "#BA7517"]
 
     )
-
+    fraud_region.update_traces(width= 0.4)
     fraud_region.update_layout(
         title_font_color= "#F4170B",
         height= 290,
@@ -401,6 +402,7 @@ def show_home():
         color_discrete_sequence=["#1D9E75", "#BA7517", "#D85A30", "#E24B4A", "#791F1F"]
 
     )
+    amount_dist_bar.update_traces(width= 0.4)
     amount_dist_bar.update_layout(
         height= 260,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
