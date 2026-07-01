@@ -304,7 +304,7 @@ def show_home():
         color=fraud_rate_per_amount.index,
         color_discrete_sequence=["#1D9E75", "#BA7517", "#D85A30", "#E24B4A", "#791F1F"]
     )
-    fraud_rate_bar.update_traces(width= 0.45)
+    #fraud_rate_bar.update_traces(width= 0.45)
 
     fraud_rate_bar.update_layout(
         height= 250,
@@ -539,6 +539,7 @@ def show_home():
         title_font= dict(color= "#BA7517"),
         showlegend= False,
         yaxis= dict(
+            range= [16000, 18000],
             title= None,
             showgrid= False
         ),
