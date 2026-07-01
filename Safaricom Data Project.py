@@ -615,7 +615,7 @@ def show_home():
     with bar_col3:
         with st.container(border= True):
             st.plotly_chart(fraud_count_bar)
-
+    st.info("🌙 Late night danger: Fraud peaks at 9 PM (hour 21) with 172 cases, followed closely by 4 AM (hour 4) with 170. The 4 AM spike is particularly suspicious — legitimate users rarely transact at 4 AM, making it a strong fraud signal for Safaricom's detection systems.")
 
 
 show_home()
