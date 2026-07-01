@@ -531,9 +531,10 @@ def show_home():
         Trans_daily,
         x= "day",
         y="count",
-        title= "Transaction Volume By Day"
-
-    )
+        title= "Transaction Volume By Day",
+        color= "day",
+        color_discrete_sequence= ["#1D9E75", "#378ADD", "#BA7517", "#50504B", "#D85A30", "#7F77DD", "#E24B4A"]
+        )
 
     col, col1, col_c= st.columns(3)
     with col:
