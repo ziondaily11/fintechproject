@@ -658,4 +658,8 @@ def show_home():
 
     st.write("DEBUG total_transactions_f:", total_transactions_f)
     st.write("DEBUG total_transactions (full):", total_transactions)
+    st.write("DEBUG rows in filtered_data:", len(filtered_data))
+    st.write("DEBUG region_filter:", region_filter)
+    st.write("DEBUG type_filter:", type_filter)
+    st.write("DEBUG fraud_filter:", fraud_filter)
 show_home()
