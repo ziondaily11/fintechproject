@@ -236,7 +236,7 @@ def show_home():
     
     
     
-    col1, col2 = st.columns([0.3, 2.7], vertical_alignment= "center", gap="small")
+    col1, col2, col_region, col_type, col_fraud = st.columns([1, 3, 2, 2, 2]) vertical_alignment= "center", gap="small")
     with col1:
         st.image(Path(__file__).parent / "projectlogo.png", width=140)
     st.markdown("<div style='margin-left: 0px;'></div>", unsafe_allow_html=True)
@@ -247,6 +247,25 @@ def show_home():
                 FINPULSE REPORT
             </h1>
         """, unsafe_allow_html=True)
+    with col_region:
+    region_filter = st.multiselect(
+        "Region",
+        options=sorted(df["region"].unique()),
+        default=[]  # empty = treated as "All" below
+    )
+
+    with col_type:
+        type_filter = st.multiselect(
+            "Transaction Type",
+            options=sorted(df["transaction_type"].unique()),
+            default=[]
+        )
+
+    with col_fraud:
+        fraud_filter = st.selectbox(
+            "Fraud Status",
+            options=["All", "Fraud only", "Legit only"]
+        )
     st.markdown("""
                     <style>
                         div[data-testid="stVerticalBlock"]:has(div.st-key-logo_header) div[data-testid="stHorizontalBlock"] {
