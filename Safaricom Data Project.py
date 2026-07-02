@@ -176,7 +176,6 @@ def show_home():
             total_volume,
             transaction_split,
             tran_per_hour,
-            transaction_split,
             fraud_amt,
             fraud_avg,
             fraud_count,
