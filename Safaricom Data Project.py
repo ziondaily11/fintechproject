@@ -248,11 +248,11 @@ def show_home():
             </h1>
         """, unsafe_allow_html=True)
     with col_region:
-    region_filter = st.multiselect(
-        "Region",
-        options=sorted(df["region"].unique()),
-        default=[]  # empty = treated as "All" below
-    )
+        region_filter = st.multiselect(
+            "Region",
+            options=sorted(df["region"].unique()),
+            default=[]  
+            )
 
     with col_type:
         type_filter = st.multiselect(
