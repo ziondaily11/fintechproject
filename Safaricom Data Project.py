@@ -8,8 +8,10 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots as msp
 from streamlit_option_menu import option_menu
 from pathlib import Path  
+import math
 import warnings
 import sys 
+
 
 
 sys.modules['warnings'] = warnings
@@ -53,6 +55,7 @@ def calc(saf_data):
         legit_amt= (total_volume- fraud_amt)
         legit_amt= round(legit_amt, 0)
         #Averages
+        
         fraud_avg= saf_data[saf_data["is_fraud"]==1]["amount"].mean()
         legit_avg= saf_data[saf_data["is_fraud"]==0]["amount"].mean()
         #fraud counts per hour
@@ -286,6 +289,10 @@ def show_home():
             smart_count_f, smart_pct_f, legit_amt_f, legit_avg_f, peak_hour_f, peak_hour_counts_f,
             amount_dist_f, fraud_rate_region_f, fraud_rate_hour_f, phone_dist_f, Trans_daily_f
     ) = calc(filtered_data)
+    
+
+    legit_avg_f = 0 if math.isnan(legit_avg_f) else legit_avg_f
+    fraud_avg_f = 0 if math.isnan(fraud_avg_f) else fraud_avg_f
     st.markdown("""
                     <style>
                         div[data-testid="stVerticalBlock"]:has(div.st-key-logo_header) div[data-testid="stHorizontalBlock"] {
