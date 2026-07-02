@@ -22,7 +22,6 @@ st.set_page_config(
     page_icon= ":bar_chart:",
     layout= "wide"
 )
-@st.cache_data
 def data_store():
    saf_data= pd.read_csv(Path(__file__).parent / "mpesa_synthetic.csv")
    return saf_data
