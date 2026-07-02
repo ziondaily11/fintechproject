@@ -212,6 +212,8 @@ def show_home():
             return f"{num/1_000:.1f}K"
         return str(num)
     def format_hour_12(hour):
+        if hour is None:
+            return "N/A"
         period = "AM" if hour < 12 else "PM"
         hour_12 = hour % 12
         if hour_12 == 0:
