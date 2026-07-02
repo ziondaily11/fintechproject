@@ -135,7 +135,7 @@ def calc(saf_data):
             phone_dist,
             Trans_daily
         )
-st.cache_data(ttl=90)
+
 def show_home():
     st.markdown("""
     <style>
