@@ -67,13 +67,18 @@ def calc(saf_data):
             
         )
         fraud_hourly_counts= fraud_hourly_counts.sort_values("hour")
+        if fraud_hourly_counts.empty:
+            peak_hour = None
+            peak_hour_counts = 0
+        else:
+           peak_hour= fraud_hourly_counts.loc[fraud_hourly_counts["count"].idxmax(), "hour"]
+           peak_hour_counts= fraud_hourly_counts["count"].max()
         fraud_rate_region= (
             saf_data.groupby(by= ["region"])["is_fraud"].mean().reset_index()
         )
         fraud_rate_region["is_fraud"]= round(fraud_rate_region["is_fraud"]*100, 2)
         #peak fraud hour
-        peak_hour= fraud_hourly_counts.loc[fraud_hourly_counts["count"].idxmax(), "hour"]
-        peak_hour_counts= fraud_hourly_counts["count"].max()
+        
         fraud_rate_hour= (saf_data.groupby(by= ["hour"])["is_fraud"].mean().reset_index())
         fraud_rate_hour["is_fraud"]= round(fraud_rate_hour["is_fraud"]*100, 2)
         #Transaction type splitt
