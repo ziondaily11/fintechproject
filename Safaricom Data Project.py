@@ -582,7 +582,7 @@ def show_home():
 
     #daily transaction count bar
     trans_daily_bar=px.bar(
-        Trans_daily,
+        Trans_daily_f,
         x= "day",
         y="count",
         category_orders={"day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]},
@@ -610,7 +610,7 @@ def show_home():
     colors = {str(hour): "#E24B4A" if hour in [4, 21] else "#888780" 
           for hour in fraud_hourly_counts["hour"]}
     fraud_count_bar= px.bar(
-        fraud_hourly_counts,
+        fraud_hourly_counts_f,
         x= "hour",
         y= "count",
         title= "Fraud Counts By Hour Of Day",
