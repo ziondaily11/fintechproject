@@ -206,6 +206,12 @@ def show_home():
         elif num >= 1_000:
             return f"{num/1_000:.1f}K"
         return str(num)
+    def format_hour_12(hour):
+        period = "AM" if hour < 12 else "PM"
+        hour_12 = hour % 12
+        if hour_12 == 0:
+            hour_12 = 12
+        return f"{hour_12} {period}"
     st.markdown("""
         <style>
             [data-testid="stMetric"] {
@@ -328,7 +334,7 @@ def show_home():
        )
     with col:
         st.metric(label= "Peak Fraud Hour",
-         value= f"{peak_hour_f-12} PM",
+         value= format_hour_12(peak_hour_f),
          delta= f"Hour {peak_hour_f}--{peak_hour_counts_f} cases",
          delta_color= "inverse")
     
