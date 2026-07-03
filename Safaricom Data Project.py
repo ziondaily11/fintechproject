@@ -253,7 +253,7 @@ def show_home():
     
     
     
-    col1, col2, col_region, col_type, col_fraud = st.columns(([1, 3, 2, 2, 2]),  vertical_alignment= "center", gap="small")
+    col1, col2, col_region, col_type, col_fraud, col_hour = st.columns(([1, 3, 2, 2, 2, 2]),  vertical_alignment= "center", gap="small")
     with col1:
         st.image(Path(__file__).parent / "projectlogo.png", width=140)
     st.markdown("<div style='margin-left: 0px;'></div>", unsafe_allow_html=True)
@@ -284,8 +284,18 @@ def show_home():
         fraud_filter = st.selectbox(
             "Fraud Status",
             options=["All", "Fraud only", "Legit only"],
+            default=[],
             placeholder="Choose Fraud Status"
         )
+    with col_hour:
+        hour_filter = st.number_input(
+                "Hour (0-23)",
+                min_value=0,
+                max_value=23,
+                value=None,
+                placeholder="e.g. 14",
+                step=1
+            )
     filtered_data = saf_data.copy()
     
     if region_filter:
@@ -301,8 +311,10 @@ def show_home():
 
     if filtered_data.empty:
         st.warning("No transactions match the selected filters. Try widening your selection.")
-        return 
-    (
+    if hour_filter is not None:
+        filtered_data = filtered_data[filtered_data["hour"] == hour_filter]
+            return 
+        (
             total_transactions_f, total_volume_f, transaction_split_f, tran_per_hour_f,
             fraud_amt_f, fraud_avg_f, fraud_count_f, fraud_hourly_counts_f,
             fraud_rate_f, fraud_rate_per_amount_f, feature_count_f, feature_pct_f,
