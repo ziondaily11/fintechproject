@@ -256,7 +256,7 @@ def show_home():
     logo_col, col_region, col_type, col_fraud, col_hour = st.columns(([1, 2, 2, 2, 2]),  vertical_alignment= "center", gap="small")
     with logo_col:
         st.image(Path(__file__).parent / "projectlogo.png", width=140)
-    st.markdown("<div style='margin-left: 0px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='margin-left: 0px;'></div>", unsafe_allow_html=True)
         st.markdown("""
             <h1 style="color: #9E1405; font-family: Orbitron, sans-serif;
                 font-size:20px; margin: 0; padding: 0;">
