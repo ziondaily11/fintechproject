@@ -268,7 +268,7 @@ def show_home():
             "Region",
             options=sorted(saf_data["region"].unique()),
             default=[],
-            placeholder="Choose Region" ,
+            placeholder="Choose Region",
             label_visibility="collapsed"
             )
 
@@ -277,7 +277,8 @@ def show_home():
             "Transaction Type"
             options=sorted(saf_data["transaction_type"].unique()),
             default=[],
-            placeholder="Choose Trxn Type"
+            placeholder="Choose Trxn Type",
+            label_visibility="collapsed"
         )
 
     with col_fraud:
@@ -285,6 +286,7 @@ def show_home():
             "Fraud Status"
         
             options=["Choose Fraud Status", "All", "Fraud only", "Legit only"],
+            label_visibility="collapsed"
         )
     with col_hour:
         hour_filter = st.number_input(
