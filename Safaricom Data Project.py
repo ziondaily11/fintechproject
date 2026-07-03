@@ -289,11 +289,13 @@ def show_home():
         )
     with col_hour:
         hour_filter = st.number_input(
+                "hour 0-23",
                 min_value=0,
                 max_value=23,
                 value=None,
                 placeholder="Enter hour",
-                step=1
+                step=1,
+                label_visibility="collapsed"
             )
     filtered_data = saf_data.copy()
     
