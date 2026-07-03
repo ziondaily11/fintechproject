@@ -265,13 +265,16 @@ def show_home():
         """, unsafe_allow_html=True)
     with col_region:
         region_filter = st.multiselect(
+            "Region",
             options=sorted(saf_data["region"].unique()),
             default=[],
-            placeholder="Choose Region" 
+            placeholder="Choose Region" ,
+            label_visibility="collapsed"
             )
 
     with col_type:
         type_filter = st.multiselect(
+            "Transaction Type"
             options=sorted(saf_data["transaction_type"].unique()),
             default=[],
             placeholder="Choose Trxn Type"
@@ -279,6 +282,7 @@ def show_home():
 
     with col_fraud:
         fraud_filter = st.selectbox(
+            "Fraud Status"
         
             options=["Choose Fraud Status", "All", "Fraud only", "Legit only"],
         )
