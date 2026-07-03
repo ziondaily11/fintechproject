@@ -73,6 +73,8 @@ def calc(saf_data):
         else:
            peak_hour= fraud_hourly_counts.loc[fraud_hourly_counts["count"].idxmax(), "hour"]
            peak_hour_counts= fraud_hourly_counts["count"].max()
+        
+        threshold= peak_hour_counts*0.9
         fraud_rate_region= (
             saf_data.groupby(by= ["region"])["is_fraud"].mean().reset_index()
         )
@@ -140,7 +142,8 @@ def calc(saf_data):
             fraud_rate_region,
             fraud_rate_hour,
             phone_dist,
-            Trans_daily
+            Trans_daily,
+            threshold
         )
 
 def show_home():
@@ -201,7 +204,8 @@ def show_home():
             fraud_rate_region,
             fraud_rate_hour,
             phone_dist,
-            Trans_daily
+            Trans_daily,
+            threshold
         )= calc(saf_data)
     def format_number(num):
         if num >= 1_000_000_000:
@@ -303,7 +307,7 @@ def show_home():
             fraud_amt_f, fraud_avg_f, fraud_count_f, fraud_hourly_counts_f,
             fraud_rate_f, fraud_rate_per_amount_f, feature_count_f, feature_pct_f,
             smart_count_f, smart_pct_f, legit_amt_f, legit_avg_f, peak_hour_f, peak_hour_counts_f,
-            amount_dist_f, fraud_rate_region_f, fraud_rate_hour_f, phone_dist_f, Trans_daily_f
+            amount_dist_f, fraud_rate_region_f, fraud_rate_hour_f, phone_dist_f, Trans_daily_f, threshold_f
     ) = calc(filtered_data)
     
 
@@ -617,8 +621,10 @@ def show_home():
         )
     )
     #FRAUD hourly counts bar 
-    colors = {str(hour): "#E24B4A" if hour in [4, 21] else "#5A6B87" 
-          for hour in fraud_hourly_counts["hour"]}
+    colors = {
+            str(hour): "#E24B4A" if count >= threshold_f else "#5A6B87"
+            for hour, count in zip(fraud_hourly_counts_f["hour"], fraud_hourly_counts_f["count"])
+        }
     fraud_count_bar= px.bar(
         fraud_hourly_counts_f,
         x= "hour",
@@ -630,7 +636,7 @@ def show_home():
     fraud_count_bar.update_layout(
         height= 300,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
-        title_font= dict(color= "#BA7517"),
+        title_font= dict(color= "#4A7C6F"),
         showlegend= False,
         yaxis= dict(
             title= None,
