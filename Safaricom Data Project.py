@@ -377,7 +377,7 @@ def show_home():
     fraud_rate_bar.update_layout(
         height= 250,
         showlegend= False,
-        title_font_color= "#F4170B",
+        title_font_color= "#B51A2B",
         margin= dict(t= 40, b= 10, l= 10, r= 10),
         yaxis= dict(
             ticksuffix= "%",
@@ -400,7 +400,7 @@ def show_home():
     )
     #fraud_region.update_traces(width= 0.45)
     fraud_region.update_layout(
-        title_font_color= "#F4170B",
+        title_font_color= "#B51A2B",
         height= 250,
         showlegend= False,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
@@ -533,7 +533,7 @@ def show_home():
             line=dict(
                 shape="spline",
                 width=2,
-                color="#F8240C"
+                color="#B51A2B"
             ),                        
             hovertemplate="<b>Hour %{x}:00</b><br>Fraud Rate: %{y:.2f}%<extra></extra>"
         )
@@ -562,7 +562,7 @@ def show_home():
     )
     fig.update_yaxes(
         title= "Fraud Rate",
-        title_font= dict(color= "#F8240C"),
+        title_font= dict(color= "#B51A2B"),
         ticksuffix= "%",
         secondary_y= True
     )
@@ -635,7 +635,7 @@ def show_home():
     fraud_count_bar.update_layout(
         height= 300,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
-        title_font= dict(color= "#4A7C6F"),
+        title_font= dict(color= "#B51A2B"),
         showlegend= False,
         yaxis= dict(
             title= None,
