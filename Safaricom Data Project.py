@@ -330,7 +330,7 @@ def show_home():
             f"smaller on average than legitimate ones (KES {round(fraud_avg_f):,} vs KES {round(legit_avg_f):,})."
         )
 
-st.info(finding_text)
+
     legit_avg_f = 0 if math.isnan(legit_avg_f) else legit_avg_f
     fraud_avg_f = 0 if math.isnan(fraud_avg_f) else fraud_avg_f
     st.markdown("""
@@ -372,9 +372,7 @@ st.info(finding_text)
          delta= f"Hour {peak_hour_f}--{peak_hour_counts_f} cases",
          delta_color= "inverse")
     
-    st.info(
-          "🔍 Biggest finding: Fraudulent transactions are on average 72% larger than legitimate ones (KES 2,535 vs KES 1,476). And for transactions above KES 5,000, the fraud rate shoots to 9.65% — nearly 1 in 10. Kenyans sending big money are the primary target."  
-        )
+    st.info(finding_text)
     st.markdown("-")
     #GRAPHS
     #fraude rate per amount
