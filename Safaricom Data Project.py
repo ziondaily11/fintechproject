@@ -259,13 +259,12 @@ def show_home():
         st.markdown("<div style='margin-left: 0px;'></div>", unsafe_allow_html=True)
         st.markdown("""
             <h1 style="color: #9E1405; font-family: Orbitron, sans-serif;
-                font-size:20px; margin: 0; padding: 0;">
+                font-size:20px; margin: -20px 0 0 0; margin: 0; padding: 0;">
                 FINPULSE 
             </h1>
         """, unsafe_allow_html=True)
     with col_region:
         region_filter = st.multiselect(
-            "Region",
             options=sorted(saf_data["region"].unique()),
             default=[],
             placeholder="Choose Region" 
@@ -273,7 +272,6 @@ def show_home():
 
     with col_type:
         type_filter = st.multiselect(
-            "Transaction Type",
             options=sorted(saf_data["transaction_type"].unique()),
             default=[],
             placeholder="Choose Trxn Type"
@@ -281,12 +279,11 @@ def show_home():
 
     with col_fraud:
         fraud_filter = st.selectbox(
-            "Fraud Status",
+        
             options=["Choose Fraud Status", "All", "Fraud only", "Legit only"],
         )
     with col_hour:
         hour_filter = st.number_input(
-                "Hour (0-23)",
                 min_value=0,
                 max_value=23,
                 value=None,
