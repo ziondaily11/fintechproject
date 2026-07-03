@@ -291,7 +291,7 @@ def show_home():
                 min_value=0,
                 max_value=23,
                 value=None,
-                placeholder="e.g. 14",
+                placeholder="Enter hour",
                 step=1
             )
     filtered_data = saf_data.copy()
