@@ -441,7 +441,7 @@ def show_home():
         height= 250,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
         annotations= [dict(
-            text= (f"{transaction_split_f.values}txns"),
+            text= (f"{transaction_split_f.values.sum():,.0f}txns"),
             x= 0.5, y= 0.5,
             font_size= 10,
             showarrow= False
