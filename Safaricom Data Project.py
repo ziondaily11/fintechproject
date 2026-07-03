@@ -611,7 +611,6 @@ def show_home():
         title_font= dict(color= "#4A7C6F"),
         showlegend= False,
         yaxis= dict(
-            range[500, 18000],
             title= None,
             showgrid= False
         ),
