@@ -421,7 +421,7 @@ def show_home():
         values= transaction_split.values,
         hole= 0.7,
         textinfo = "none",
-        marker_colors=["#1D9E75", "#BA7517", "#D85A30"]
+        marker_colors=["#FFA586", "#384358", "#4A7C6F"]
     ))
     transaction_split_pie.update_traces(
         domain= dict(x=[0.1, 0.9], y=[0.1, 0.9])
@@ -514,7 +514,7 @@ def show_home():
             line=dict(
                 shape="spline",
                 width=3,
-                color="#18c29c"
+                color="#4A7C6F"
             ),
             marker=dict(size=7),
             hovertemplate="<b>Hour %{x}:00</b><br>Transactions: %{y}<extra></extra>"
