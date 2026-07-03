@@ -351,11 +351,10 @@ def show_home():
             f"✅ Fraud rate is low ({round(fraud_rate_f,2)}%) for this selection — current controls appear effective here."
         )
 
-    st.info(recommendation_text)
+    
 
 
-    legit_avg_f = 0 if math.isnan(legit_avg_f) else legit_avg_f
-    fraud_avg_f = 0 if math.isnan(fraud_avg_f) else fraud_avg_f
+    
     st.markdown("""
                     <style>
                         div[data-testid="stVerticalBlock"]:has(div.st-key-logo_header) div[data-testid="stHorizontalBlock"] {
