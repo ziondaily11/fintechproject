@@ -418,11 +418,11 @@ def show_home():
     #transaction split pie
     label_with_count= [
         f"{label.upper()} ({value:,})"
-        for label, value in zip(transaction_split.index, transaction_split.values)
+        for label, value in zip(transaction_split_f.index, transaction_split_f.values)
     ]
     transaction_split_pie= go.Figure(go.Pie(
         labels= label_with_count,
-        values= transaction_split.values,
+        values= transaction_split_f.values,
         hole= 0.7,
         textinfo = "none",
         marker_colors=["#FFA586", "#384358", "#4A7C6F"]
@@ -435,13 +435,13 @@ def show_home():
                 text= "<b>Transaction Type Split</b>",
                 x= 0,
                 y= 0.97,
-                font= dict(color= "#618948")
+                font= dict(color= "#4A7C6F")
                 ),
         
         height= 250,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
         annotations= [dict(
-            text= "120,000 txns",
+            text= (f"{transaction_split_f.values}txns"),
             x= 0.5, y= 0.5,
             font_size= 10,
             showarrow= False
