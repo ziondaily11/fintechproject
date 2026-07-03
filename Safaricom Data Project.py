@@ -261,7 +261,7 @@ def show_home():
         st.markdown("""
             <h1 style="color: #9E1405; font-family: Courier New, monospace;
                 font-size:30px; margin: 0; padding: 0;">
-                FINPULSE REPORT
+                FINPULSE 
             </h1>
         """, unsafe_allow_html=True)
     with col_region:
@@ -381,12 +381,12 @@ def show_home():
     with lef:
         st.metric(label= "Total Transactions", 
         value= f"{total_transactions_f:,}",
-        delta= f"{round(total_transactions_f/total_transactions*100, 1)}% of Total Transactions"
+        delta= f"{round(total_transactions_f/total_transactions*100, 1)}% of Total Trxnx"
         )
     with mid_lef:
         st.metric(label= "Total Volume", 
         value= f"KES {format_number(total_volume_f)}",
-        delta= f"{round(total_volume_f/total_volume*100, 1)}%of Total Value"
+        delta= f"{round(total_volume_f/total_volume*100, 1)}% of Total Value"
         )
     with mid:
         st.metric(label="Fraud Rate", value=f"{round(fraud_rate_f, 2)}%",
