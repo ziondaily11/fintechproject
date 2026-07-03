@@ -274,7 +274,7 @@ def show_home():
 
     with col_type:
         type_filter = st.multiselect(
-            "Transaction Type"
+            "Transaction Type",
             options=sorted(saf_data["transaction_type"].unique()),
             default=[],
             placeholder="Choose Trxn Type",
@@ -283,8 +283,7 @@ def show_home():
 
     with col_fraud:
         fraud_filter = st.selectbox(
-            "Fraud Status"
-        
+            "Fraud Status",
             options=["Choose Fraud Status", "All", "Fraud only", "Legit only"],
             label_visibility="collapsed"
         )
