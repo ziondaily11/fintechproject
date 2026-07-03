@@ -479,7 +479,7 @@ def show_home():
             title= None,
             tickformat= "~s"
         ),
-        title_font_color= "#618948",
+        title_font_color= "#4A7C6F",
     )
     amount_dist_bar= px.bar(
         amount_dist_f,
@@ -494,7 +494,7 @@ def show_home():
     amount_dist_bar.update_layout(
         height= 250,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
-        title_font_color= "#618948",
+        title_font_color= "#4A7C6F",
         showlegend= False,
         yaxis= dict(
             title= None
@@ -541,7 +541,7 @@ def show_home():
     fig.add_trace(fraud_trace, secondary_y=True)
     fig.update_layout(
         title= "Transactions V Fraud Rate by Hour",
-        title_font= dict(color= "#618948"),
+        title_font= dict(color= "#4A7C6F"),
         template= "plotly_dark",
         hovermode= "x unified",
 
@@ -608,10 +608,9 @@ def show_home():
     trans_daily_bar.update_layout(
         height= 300,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
-        title_font= dict(color= "#BA7517"),
+        title_font= dict(color= "#4A7C6F"),
         showlegend= False,
         yaxis= dict(
-            range= [16000, 18000],
             title= None,
             showgrid= False
         ),
