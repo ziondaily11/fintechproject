@@ -309,9 +309,6 @@ def show_home():
 
     if filtered_data.empty:
         st.warning("No transactions match the selected filters. Try widening your selection.")
-    if hour_filter:
-        filtered_data = filtered_data[filtered_data["hour"] == hour_filter]
-    return 
     (
             total_transactions_f, total_volume_f, transaction_split_f, tran_per_hour_f,
             fraud_amt_f, fraud_avg_f, fraud_count_f, fraud_hourly_counts_f,
