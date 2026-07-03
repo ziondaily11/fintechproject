@@ -309,6 +309,8 @@ def show_home():
             smart_count_f, smart_pct_f, legit_amt_f, legit_avg_f, peak_hour_f, peak_hour_counts_f,
             amount_dist_f, fraud_rate_region_f, fraud_rate_hour_f, phone_dist_f, Trans_daily_f, threshold_f
     ) = calc(filtered_data)
+    legit_avg_f = 0 if math.isnan(legit_avg_f) else legit_avg_f
+    fraud_avg_f = 0 if math.isnan(fraud_avg_f) else fraud_avg_f
     pct_larger = round(((fraud_avg_f - legit_avg_f) / legit_avg_f) * 100, 1) if legit_avg_f != 0 else 0
     if filtered_data.empty:
         finding_text = "No data available for this selection."
@@ -329,6 +331,27 @@ def show_home():
             f"🔍 Interesting reversal: in this selection, fraudulent transactions are actually "
             f"smaller on average than legitimate ones (KES {round(fraud_avg_f):,} vs KES {round(legit_avg_f):,})."
         )
+    if filtered_data.empty:
+        recommendation_text = "No data available for this selection."
+    elif total_transactions_f < 50:
+        recommendation_text = "⚠️ Sample size is small for this selection — treat any pattern here as exploratory, not conclusive."
+    elif fraud_rate_f > 5:
+        recommendation_text = (
+            f"🛡️ Recommendation: Fraud rate here is elevated at {round(fraud_rate_f,2)}%. "
+            f"Consider requiring additional verification (PIN/OTP) for transactions in this segment, "
+            f"especially around hour {peak_hour_f if peak_hour_f is not None else 'N/A'}, where fraud concentrates."
+        )
+    elif fraud_rate_f > 2:
+        recommendation_text = (
+            f"🛡️ Recommendation: Fraud rate ({round(fraud_rate_f,2)}%) is moderate. "
+            f"Monitor this segment and consider flagging transactions above KES {round(legit_avg_f*2):,} for manual review."
+        )
+    else:
+        recommendation_text = (
+            f"✅ Fraud rate is low ({round(fraud_rate_f,2)}%) for this selection — current controls appear effective here."
+        )
+
+    st.info(recommendation_text)
 
 
     legit_avg_f = 0 if math.isnan(legit_avg_f) else legit_avg_f
@@ -373,6 +396,7 @@ def show_home():
          delta_color= "inverse")
     
     st.info(finding_text)
+    st.info(recommendation_text)
     st.markdown("-")
     #GRAPHS
     #fraude rate per amount
