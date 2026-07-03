@@ -306,6 +306,8 @@ def show_home():
         filtered_data = filtered_data[filtered_data["is_fraud"] == 1]
     elif fraud_filter == "Legit only":
         filtered_data = filtered_data[filtered_data["is_fraud"] == 0]
+    if hour_filter is not None:
+        filtered_data = filtered_data[filtered_data["hour"] == hour_filter]
 
     if filtered_data.empty:
         st.warning("No transactions match the selected filters. Try widening your selection.")
