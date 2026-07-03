@@ -309,7 +309,7 @@ def show_home():
 
     if filtered_data.empty:
         st.warning("No transactions match the selected filters. Try widening your selection.")
-    if hour_filter is not None:
+    if hour_filter:
         filtered_data = filtered_data[filtered_data["hour"] == hour_filter]
     return 
     (
