@@ -253,14 +253,13 @@ def show_home():
     
     
     
-    col1, col2, col_region, col_type, col_fraud, col_hour = st.columns(([1, 3, 2, 2, 2, 2]),  vertical_alignment= "center", gap="small")
-    with col1:
+    logo_col, col_region, col_type, col_fraud, col_hour = st.columns(([1, 2, 2, 2, 2]),  vertical_alignment= "center", gap="small")
+    with logo_col:
         st.image(Path(__file__).parent / "projectlogo.png", width=140)
     st.markdown("<div style='margin-left: 0px;'></div>", unsafe_allow_html=True)
-    with col2:
         st.markdown("""
-            <h1 style="color: #9E1405; font-family: Courier New, monospace;
-                font-size:30px; margin: 0; padding: 0;">
+            <h1 style="color: #9E1405; font-family: Orbitron, sans-serif;
+                font-size:20px; margin: 0; padding: 0;">
                 FINPULSE 
             </h1>
         """, unsafe_allow_html=True)
@@ -408,8 +407,7 @@ def show_home():
          delta= f"Hour {peak_hour_f}--{peak_hour_counts_f} cases",
          delta_color= "inverse")
     
-    st.info(finding_text)
-    st.info(recommendation_text)
+    st.info(f"{finding_text}\n\n{recommendation_text}")
     st.markdown("-")
     #GRAPHS
     #fraude rate per amount
