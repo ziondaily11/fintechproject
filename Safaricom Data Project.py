@@ -309,7 +309,7 @@ def show_home():
             smart_count_f, smart_pct_f, legit_amt_f, legit_avg_f, peak_hour_f, peak_hour_counts_f,
             amount_dist_f, fraud_rate_region_f, fraud_rate_hour_f, phone_dist_f, Trans_daily_f, threshold_f
     ) = calc(filtered_data)
-    
+    pct_larger = round(((fraud_avg_f - legit_avg_f) / legit_avg_f) * 100, 1) if legit_avg_f != 0 else 0
     if filtered_data.empty:
         finding_text = "No data available for this selection."
     elif pct_larger > 50:
