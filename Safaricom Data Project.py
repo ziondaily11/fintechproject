@@ -366,7 +366,7 @@ def show_home():
         y= fraud_rate_per_amount_f.values,
         title= "<b>Fraud rate by transaction amount</b>",
         color=fraud_rate_per_amount_f.index,
-        color_discrete_sequence=["#1D9E75", "#BA7517", "#D85A30", "#E24B4A", "#791F1F"]
+        color_discrete_sequence=["#5A6B87"]
     )
     #fraud_rate_bar.update_traces(width= 0.45)
 
@@ -391,7 +391,7 @@ def show_home():
         y= "is_fraud",
         title= "<b> Fraud Rate Per Region</b>",
         color= "region",
-        color_discrete_sequence=["#D85A30", "#E24B4A", "#791F1F", "#1D9E75", "#BA7517"]
+        color_discrete_sequence=["#5A6B87"]
 
     )
     #fraud_region.update_traces(width= 0.45)
@@ -483,7 +483,7 @@ def show_home():
         y= amount_dist_f.values,
         title= "Amount Distribution",
         color= amount_dist_f.index,
-        color_discrete_sequence=["#1D9E75", "#BA7517", "#D85A30", "#E24B4A", "#791F1F"]
+        color_discrete_sequence=["#5A6B87"]
 
     )
     #amount_dist_bar.update_traces(width= 0.45)
@@ -598,7 +598,7 @@ def show_home():
         category_orders={"day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]},
         title= "Transaction Volume By Day",
         color= "day",
-        color_discrete_sequence= ["#1D9E75", "#378ADD", "#BA7517", "#50504B", "#D85A30", "#7F77DD", "#E24B4A"]
+        color_discrete_sequence= ["#5A6B87"]
         )
     
     trans_daily_bar.update_layout(
@@ -617,7 +617,7 @@ def show_home():
         )
     )
     #FRAUD hourly counts bar 
-    colors = {str(hour): "#E24B4A" if hour in [4, 21] else "#888780" 
+    colors = {str(hour): "#E24B4A" if hour in [4, 21] else "#5A6B87" 
           for hour in fraud_hourly_counts["hour"]}
     fraud_count_bar= px.bar(
         fraud_hourly_counts_f,
