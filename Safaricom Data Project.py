@@ -570,7 +570,7 @@ def show_home():
             line=dict(
                 shape="spline",
                 width=3,
-                color="#4A7C6F"
+                color="#1D9E75"
             ),
             marker=dict(size=7),
             hovertemplate="<b>Hour %{x}:00</b><br>Transactions: %{y}<extra></extra>"
