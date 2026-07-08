@@ -326,15 +326,21 @@ def show_home():
     legit_avg_f = 0 if math.isnan(legit_avg_f) else legit_avg_f
     fraud_avg_f = 0 if math.isnan(fraud_avg_f) else fraud_avg_f
     pct_larger = round(((fraud_avg_f - legit_avg_f) / legit_avg_f) * 100, 1) if legit_avg_f != 0 else 0
-
+    legit_count_f = filtered_data[filtered_data["is_fraud"] == 0].shape[0]
 
 
     if filtered_data.empty:
         finding_text = "No data available for this selection."
+    elif legit_count_f == 0 and fraud_count_f > 0:
+        finding_text = (
+            f"🔍 Every transaction in this selection is fraudulent — "
+            f"there are no legitimate transactions to compare against "
+            f"(avg fraud amount: KES {round(fraud_avg_f):,})."
+        )
     elif pct_larger > 50:
         finding_text = (
             f"🔍 Big gap: Fraudulent transactions here run {pct_larger}% larger than legitimate ones "
-            f"(KES {round(fraud_avg_f):,} vs KES {round(legit_avg_f):,}) — high-value transactions are clearly the target."
+            f"(KES {round(fraud_avg_f):,} vs KES {round(legit_avg_f):,}) — high-value transactions are clearly the target for fraud."
         )
     elif pct_larger > 0:
         finding_text = (
