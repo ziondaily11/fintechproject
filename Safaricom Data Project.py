@@ -755,6 +755,55 @@ def show_home():
     with bar_col3:
         with st.container(border= True):
             st.plotly_chart(fraud_count_bar)
-    st.info("🌙 Late night danger: Fraud peaks at 9 PM (hour 21) with 172 cases, followed closely by 4 AM (hour 4) with 170. The 4 AM spike is particularly suspicious — legitimate users rarely transact at 4 AM, making it a strong fraud signal for Safaricom's detection systems.")
+    # Compute fraud counts by hour from the filtered data
+    fraud_by_hour = (
+        filtered_data[filtered_data["is_fraud"] == 1]
+        .groupby("hour")
+        .size()
+        .sort_values(ascending=False)
+    )
+    
+    # Get the region label for the message (adjust to however your region filter is stored)
+    if selected_regions:
+        region_label = ", ".join(selected_regions)
+    else:
+        region_label = "all regions"
+    
+    if fraud_by_hour.empty:
+        st.info(f"🌙 No fraud cases recorded in {region_label} for this selection.")
+    else:
+        top_hour = fraud_by_hour.index[0]
+        top_count = fraud_by_hour.iloc[0]
+    
+        def fmt_hour(h):
+            suffix = "AM" if h < 12 else "PM"
+            display_h = h % 12
+            display_h = 12 if display_h == 0 else display_h
+            return f"{display_h} {suffix}"
+    
+        if len(fraud_by_hour) > 1:
+            second_hour = fraud_by_hour.index[1]
+            second_count = fraud_by_hour.iloc[1]
+            peak_text = (
+                f"Fraud peaks at {fmt_hour(top_hour)} (hour {top_hour}) with {top_count} cases, "
+                f"followed closely by {fmt_hour(second_hour)} (hour {second_hour}) with {second_count}."
+            )
+        else:
+            peak_text = f"Fraud peaks at {fmt_hour(top_hour)} (hour {top_hour}) with {top_count} cases."
+    
+        # Flag unusual timing — outside typical daytime hours (adjust thresholds as needed)
+        is_odd_hour = top_hour < 6 or top_hour >= 23
+        context_note = (
+            " This is an unusual time for legitimate activity, making it a strong fraud signal."
+            if is_odd_hour else
+            " This falls within normal transacting hours, so timing alone isn't a strong signal here."
+        )
+    
+        recommendation = (
+            f" Recommendation: flag transactions in {region_label} around hour {top_hour} "
+            f"for additional verification (PIN/OTP), especially given the concentration of {top_count} cases."
+        )
+    
+        st.info(f"🌙 Late night danger — {region_label}: {peak_text}{context_note}{recommendation}")
 
 show_home()
