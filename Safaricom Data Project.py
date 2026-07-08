@@ -422,7 +422,7 @@ def show_home():
         y= fraud_rate_per_amount_f.values,
         title= "<b>Fraud rate by transaction amount</b>",
         color=fraud_rate_per_amount_f.index,
-        color_discrete_sequence=["#2E5EAA"]
+        color_discrete_sequence=["#052659"]
     )
     #fraud_rate_bar.update_traces(width= 0.45)
 
