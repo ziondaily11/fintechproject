@@ -652,30 +652,40 @@ def show_home():
     )
 
     #daily transaction count bar
-    trans_daily_bar=px.bar(
+    avg_count = Trans_daily["count"].mean()  # baseline from FULL unfiltered data
+
+    Trans_daily_f = Trans_daily_f.copy()
+    Trans_daily_f["delta"] = Trans_daily_f["count"] - avg_count
+    Trans_daily_f["direction"] = Trans_daily_f["delta"].apply(lambda d: "Above avg" if d >= 0 else "Below avg")
+    
+    trans_daily_bar = px.bar(
         Trans_daily_f,
-        x= "day",
-        y="count",
+        x="day",
+        y="delta",
         category_orders={"day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]},
-        title= "Transaction Volume By Day",
-        color= "day",
-        color_discrete_sequence= ["#5A6B87"]
-        )
+        title="Transaction Volume By Day (vs. average)",
+        color="direction",
+        color_discrete_map={"Above avg": "#5A6B87", "Below avg": "#C97B63"},
+    )
     
     trans_daily_bar.update_layout(
-        height= 300,
-        margin= dict(t= 40, b= 10, l= 10, r= 10),
-        title_font= dict(color= "#4A7C6F"),
-        showlegend= False,
-        yaxis= dict(
-            title= None,
-            showgrid= False
+        height=300,
+        margin=dict(t=40, b=10, l=10, r=10),
+        title_font=dict(color="#4A7C6F"),
+        showlegend=False,
+        yaxis=dict(
+            title=None,
+            showgrid=False,
+            zeroline=True,
+            zerolinecolor="#999999",
+            zerolinewidth=1,
         ),
-        xaxis= dict(
-            title= None,
-            showgrid= False
-        )
+        xaxis=dict(
+            title=None,
+            showgrid=False,
+        ),
     )
+    
     #FRAUD hourly counts bar 
     colors = {
             str(hour): "#E24B4A" if count >= threshold_f else "#5A6B87"
