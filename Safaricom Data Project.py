@@ -415,19 +415,14 @@ def show_home():
     st.markdown("-")
     #GRAPHS
     #fraude rate per amount
-    color_map={
-       "cat1": "#1D9E75",
-       "cat2": "#BA7517",
-       "cat3": "#D85A30",
-       "cat4": "#E24B4A",      
-       "cat5": "#791F1F"}
+    
     fraud_rate_bar= px.bar(
          fraud_rate_per_amount_f,
         x= fraud_rate_per_amount_f.index,
         y= fraud_rate_per_amount_f.values,
         title= "<b>Fraud rate by transaction amount</b>",
         color=fraud_rate_per_amount_f.index,
-        color_discrete_sequence=["#5A6B87"]
+        color_discrete_sequence=["#2E5EAA"]
     )
     #fraud_rate_bar.update_traces(width= 0.45)
 
@@ -452,7 +447,7 @@ def show_home():
         y= "is_fraud",
         title= "<b> Fraud Rate Per Region</b>",
         color= "region",
-        color_discrete_sequence=["#5A6B87"]
+        color_discrete_sequence=["#2E5EAA"]
 
     )
     #fraud_region.update_traces(width= 0.45)
@@ -544,7 +539,7 @@ def show_home():
         y= amount_dist_f.values,
         title= "Amount Distribution",
         color= amount_dist_f.index,
-        color_discrete_sequence=["#5A6B87"]
+        color_discrete_sequence=["#2E5EAA"]
 
     )
     #amount_dist_bar.update_traces(width= 0.45)
@@ -687,7 +682,7 @@ def show_home():
         
     #FRAUD hourly counts bar 
     colors = {
-            str(hour): "#E24B4A" if count >= threshold_f else "#5A6B87"
+            str(hour): "#E24B4A" if count >= threshold_f else "#2E5EAA"
             for hour, count in zip(fraud_hourly_counts_f["hour"], fraud_hourly_counts_f["count"])
         }
     fraud_count_bar= px.bar(
