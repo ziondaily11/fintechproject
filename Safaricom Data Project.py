@@ -647,6 +647,8 @@ def show_home():
     )
 
     #daily transaction count bar
+    Trans_daily_f["count_label"] = Trans_daily_f["count"].apply(format_number)
+
     trans_daily_bar = px.bar(
     Trans_daily_f,
     x="day",
@@ -655,7 +657,7 @@ def show_home():
     title="Transaction Volume By Day",
     color="day",
     color_discrete_sequence=["#2E5EAA"],
-    text=f"{format_number(count)}",
+    text="count_label"
     )
 
     trans_daily_bar.update_traces(
