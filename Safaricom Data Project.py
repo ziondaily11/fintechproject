@@ -654,7 +654,7 @@ def show_home():
     category_orders={"day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]},
     title="Transaction Volume By Day",
     color="day",
-    color_discrete_sequence=["#5A6B87"],
+    color_discrete_sequence=["#2E5EAA"],
     text=f{"format_number(count)}",
     )
 
