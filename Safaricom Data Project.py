@@ -764,7 +764,7 @@ def show_home():
     )
     
     if region_filter:
-        region_label = ", ".join(region_f)
+        region_label = ", ".join(region_filter)
     else:
         region_label = "all regions"
     
