@@ -763,7 +763,7 @@ def show_home():
         .sort_values(ascending=False)
     )
     
-    if region_f:
+    if region_filter:
         region_label = ", ".join(region_f)
     else:
         region_label = "all regions"
