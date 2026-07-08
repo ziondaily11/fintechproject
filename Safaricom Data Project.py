@@ -655,7 +655,7 @@ def show_home():
     title="Transaction Volume By Day",
     color="day",
     color_discrete_sequence=["#5A6B87"],
-    text="count",
+    text=f{"format_number(count)}",
     )
 
     trans_daily_bar.update_traces(
