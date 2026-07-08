@@ -756,7 +756,7 @@ def show_home():
         with st.container(border= True):
             st.plotly_chart(fraud_count_bar)
    
-   fraud_by_hour = (
+    fraud_by_hour = (
         filtered_data[filtered_data["is_fraud"] == 1]
         .groupby("hour")
         .size()
