@@ -477,7 +477,7 @@ def show_home():
         values= transaction_split_f.values,
         hole= 0.7,
         textinfo = "none",
-        marker_colors=["#FFA586", "#384358", "#4A7C6F"]
+        marker_colors=["#2E5EAA", "#E8935A", "#1D9E75"]
     ))
     transaction_split_pie.update_traces(
         domain= dict(x=[0.1, 0.9], y=[0.1, 0.9])
@@ -655,7 +655,7 @@ def show_home():
     title="Transaction Volume By Day",
     color="day",
     color_discrete_sequence=["#2E5EAA"],
-    text=f{"format_number(count)}",
+    text=f"{format_number(count)}",
     )
 
     trans_daily_bar.update_traces(
