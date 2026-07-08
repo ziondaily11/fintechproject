@@ -406,9 +406,13 @@ def show_home():
         value= (f"KES {round(legit_avg_f):,}"),
         delta= "per transaction")
     with rig:
+       if legit_avg_f == 0:
+            delta_text = "no legitimate txns to compare" if fraud_avg_f > 0 else "no data"
+       else:
+            delta_text = f"{round(fraud_avg_f/legit_avg_f, 2)}x larger than legit"
        st.metric(label= "Avg. Fraud Amount", 
        value= (f"KES {round(fraud_avg_f):,}"),
-       delta= f"{round(fraud_avg_f/legit_avg_f, 2)}x larger than legit",
+       delta= delta_text
         delta_color= "inverse"
        )
     with col:
