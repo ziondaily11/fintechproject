@@ -412,7 +412,7 @@ def show_home():
             delta_text = f"{round(fraud_avg_f/legit_avg_f, 2)}x larger than legit"
        st.metric(label= "Avg. Fraud Amount", 
        value= (f"KES {round(fraud_avg_f):,}"),
-       delta= delta_text
+       delta= delta_text,
         delta_color= "inverse"
        )
     with col:
