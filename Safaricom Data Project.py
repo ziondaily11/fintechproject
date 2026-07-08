@@ -802,5 +802,5 @@ def show_home():
             f"for additional verification (PIN/OTP), especially given the concentration of {top_count} cases."
         )
     
-        st.info(f"🌙 Late night danger — {region_label}: {peak_text}{context_note}{recommendation}")
+        st.info(f"finding🔍 — {region_label}: {peak_text}{context_note}{recommendation}")
 show_home()
