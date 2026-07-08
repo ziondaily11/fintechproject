@@ -662,7 +662,7 @@ def show_home():
 
     trans_daily_bar.update_traces(
         textposition="outside",
-        texttemplate="%{text:,}",
+        texttemplate="%{text}",
         textfont=dict(size=11, color="#5A6B87"),
         )
     
