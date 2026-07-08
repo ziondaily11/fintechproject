@@ -755,17 +755,16 @@ def show_home():
     with bar_col3:
         with st.container(border= True):
             st.plotly_chart(fraud_count_bar)
-    # Compute fraud counts by hour from the filtered data
-    fraud_by_hour = (
+   
+   fraud_by_hour = (
         filtered_data[filtered_data["is_fraud"] == 1]
         .groupby("hour")
         .size()
         .sort_values(ascending=False)
     )
     
-    # Get the region label for the message (adjust to however your region filter is stored)
-    if selected_regions:
-        region_label = ", ".join(selected_regions)
+    if region_f:
+        region_label = ", ".join(region_f)
     else:
         region_label = "all regions"
     
@@ -791,7 +790,6 @@ def show_home():
         else:
             peak_text = f"Fraud peaks at {fmt_hour(top_hour)} (hour {top_hour}) with {top_count} cases."
     
-        # Flag unusual timing — outside typical daytime hours (adjust thresholds as needed)
         is_odd_hour = top_hour < 6 or top_hour >= 23
         context_note = (
             " This is an unusual time for legitimate activity, making it a strong fraud signal."
@@ -805,5 +803,4 @@ def show_home():
         )
     
         st.info(f"🌙 Late night danger — {region_label}: {peak_text}{context_note}{recommendation}")
-
 show_home()
