@@ -422,14 +422,14 @@ def show_home():
         y= fraud_rate_per_amount_f.values,
         title= "<b>Fraud rate by transaction amount</b>",
         color=fraud_rate_per_amount_f.index,
-        color_discrete_sequence=["#052659"]
+        color_discrete_sequence=["#2E5EAA"]
     )
     #fraud_rate_bar.update_traces(width= 0.45)
 
     fraud_rate_bar.update_layout(
         height= 250,
         showlegend= False,
-        title_font_color= "#B51A2B",
+        title_font_color= "#E24B4A",
         margin= dict(t= 40, b= 10, l= 10, r= 10),
         yaxis= dict(
             ticksuffix= "%",
@@ -452,7 +452,7 @@ def show_home():
     )
     #fraud_region.update_traces(width= 0.45)
     fraud_region.update_layout(
-        title_font_color= "#B51A2B",
+        title_font_color= "#E24B4A",
         height= 250,
         showlegend= False,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
@@ -487,7 +487,7 @@ def show_home():
                 text= "<b>Transaction Type Split</b>",
                 x= 0,
                 y= 0.97,
-                font= dict(color= "#4A7C6F")
+                font= dict(color= "#1D9E75")
                 ),
         
         height= 250,
@@ -546,7 +546,7 @@ def show_home():
     amount_dist_bar.update_layout(
         height= 250,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
-        title_font_color= "#4A7C6F",
+        title_font_color= "#1D9E75",
         showlegend= False,
         yaxis= dict(
             title= None
@@ -585,7 +585,7 @@ def show_home():
             line=dict(
                 shape="spline",
                 width=2,
-                color="#B51A2B"
+                color="#E24B4A"
             ),                        
             hovertemplate="<b>Hour %{x}:00</b><br>Fraud Rate: %{y:.2f}%<extra></extra>"
         )
@@ -593,7 +593,7 @@ def show_home():
     fig.add_trace(fraud_trace, secondary_y=True)
     fig.update_layout(
         title= "Transactions V Fraud Rate by Hour",
-        title_font= dict(color= "#4A7C6F"),
+        title_font= dict(color= "#1D9E75"),
         template= "plotly_dark",
         hovermode= "x unified",
 
@@ -607,14 +607,14 @@ def show_home():
     )
     fig.update_yaxes(
         title= "Transactions",
-        title_font_color= "#18c29c",
+        title_font_color= "#1D9E75",
         range= [4700, 5200],
         tickformat= "~s",
         secondary_y= False
     )
     fig.update_yaxes(
         title= "Fraud Rate",
-        title_font= dict(color= "#B51A2B"),
+        title_font= dict(color= "#E24B4A"),
         ticksuffix= "%",
         secondary_y= True
     )
@@ -663,13 +663,13 @@ def show_home():
     trans_daily_bar.update_traces(
         textposition="outside",
         texttemplate="%{text}",
-        textfont=dict(size=11, color="#5A6B87"),
+        textfont=dict(size=11, color="#2E5EAA"),
         )
     
     trans_daily_bar.update_layout(
         height= 300,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
-        title_font= dict(color= "#4A7C6F"),
+        title_font= dict(color= "#1D9E75"),
         showlegend= False,
         yaxis= dict(
             title= None,
@@ -698,7 +698,7 @@ def show_home():
     fraud_count_bar.update_layout(
         height= 300,
         margin= dict(t= 40, b= 10, l= 10, r= 10),
-        title_font= dict(color= "#B51A2B"),
+        title_font= dict(color= "#E24B4A"),
         showlegend= False,
         yaxis= dict(
             title= None,
