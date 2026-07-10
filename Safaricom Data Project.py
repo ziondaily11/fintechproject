@@ -1,0 +1,806 @@
+
+#A safaricom mpesa dataset analysis
+#modules
+import pandas as pd
+import streamlit as st
+import plotly_express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots as msp
+from streamlit_option_menu import option_menu
+from pathlib import Path  
+import math
+import warnings
+import sys 
+
+
+
+sys.modules['warnings'] = warnings
+
+
+
+
+st.set_page_config(
+    page_title= "FinPulseAnalysis",
+    page_icon= ":bar_chart:",
+    layout= "wide"
+)
+def data_store():
+   saf_data= pd.read_csv(Path(__file__).parent / "mpesa_synthetic.csv")
+   return saf_data
+@st.cache_data(ttl= 90)
+def calc(saf_data):
+        
+        saf_data= saf_data.dropna(subset= "transaction_id")
+        #calculations
+        #total transactions
+        total_transactions= saf_data["transaction_id"].nunique()
+        #total volume of transaction amount
+        total_volume= saf_data["amount"].sum()
+        #fraud rate
+        fraud_count= saf_data["is_fraud"].sum()
+        fraud_rate= fraud_count*100/total_transactions
+        #return rate per amount categories
+        saf_data["amount_cat"]= pd.cut(
+            saf_data["amount"],
+            bins= [0, 500, 1000, 2000, 5000, float("inf")],
+            labels= ["0-500", "500-1k", "1k-2k", "2k-5k", "5k+"]
+        )
+        fraud_rate_per_amount= (
+            saf_data.groupby("amount_cat")["is_fraud"]
+            .mean()
+            *100
+        )
+        #fraud & Legit amountrs
+        fraud_amt= saf_data[saf_data["is_fraud"]==1]["amount"].sum()
+        legit_amt= (total_volume- fraud_amt)
+        legit_amt= round(legit_amt, 0)
+        #Averages
+        
+        fraud_avg= saf_data[saf_data["is_fraud"]==1]["amount"].mean()
+        legit_avg= saf_data[saf_data["is_fraud"]==0]["amount"].mean()
+        #fraud counts per hour
+        fraud_hourly_counts= (
+            saf_data[saf_data["is_fraud"]==1]
+            .groupby("hour")
+            .size()
+            .reset_index(name= "count")
+            
+        )
+        fraud_hourly_counts= fraud_hourly_counts.sort_values("hour")
+        if fraud_hourly_counts.empty:
+            peak_hour = None
+            peak_hour_counts = 0
+        else:
+           peak_hour= fraud_hourly_counts.loc[fraud_hourly_counts["count"].idxmax(), "hour"]
+           peak_hour_counts= fraud_hourly_counts["count"].max()
+        
+        threshold= peak_hour_counts*0.9
+        fraud_rate_region= (
+            saf_data.groupby(by= ["region"])["is_fraud"].mean().reset_index()
+        )
+        fraud_rate_region["is_fraud"]= round(fraud_rate_region["is_fraud"]*100, 2)
+        #peak fraud hour
+        
+        fraud_rate_hour= (saf_data.groupby(by= ["hour"])["is_fraud"].mean().reset_index())
+        fraud_rate_hour["is_fraud"]= round(fraud_rate_hour["is_fraud"]*100, 2)
+        #Transaction type splitt
+        transaction_split= (saf_data.groupby(by= "transaction_type")[["transaction_id"]]
+                            .size()
+                        )
+        #amount distribution bucket
+        amount_dist= (
+            saf_data.groupby("amount_cat")["amount"].sum()
+        )
+        #transactions per hour
+        tran_per_hour= (
+            saf_data.groupby("hour")["transaction_id"].size().sort_index()
+                        )
+        #Device split
+        smart_count= (saf_data["device_type"]=="smartphone").sum()
+        feature_count= (saf_data["device_type"]=="feature").sum()
+        total= smart_count+feature_count
+        smart_pct= round(smart_count*100/total, 2)
+        feature_pct= round(feature_count*100/total, 2)
+
+        device_per_region= (
+            saf_data.groupby(["region", "device_type"]).size()
+        )
+        #phone distribution by region
+        phone_dist= (saf_data.groupby(["region", "device_type"])
+        .size()
+        .reset_index(name= "count")
+        )
+        #Transaction volume by day of the weak
+        Trans_daily= (
+            saf_data.groupby(
+               by= ["day_of_week"]
+            )[["transaction_id"]].size()
+            .reset_index(name="count")
+            .rename(columns={"day_of_week": "day"})
+        )
+        Trans_daily= Trans_daily.sort_values("day")
+        return (
+            total_transactions,
+            total_volume,
+            transaction_split,
+            tran_per_hour,
+            fraud_amt,
+            fraud_avg,
+            fraud_count,
+            fraud_hourly_counts,
+            fraud_rate,
+            fraud_rate_per_amount,
+            feature_count,
+            feature_pct,
+            smart_count,
+            smart_pct,
+            legit_amt,
+            legit_avg,
+            peak_hour,
+            peak_hour_counts,
+            amount_dist,
+            fraud_rate_region,
+            fraud_rate_hour,
+            phone_dist,
+            Trans_daily,
+            threshold
+        )
+
+def show_home():
+    st.markdown("""
+    <style>
+        [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlockBorderWrapper"] {
+            padding-top: 0rem;
+        }
+        .block-container {
+            padding-top: 0.5rem;
+        }
+        div[data-testid="stHorizontalBlock"] {
+            margin-top: -2rem;
+        }
+    </style>
+""", unsafe_allow_html=True) 
+    st.markdown("""
+        <style>
+            [data-testid="stMetric"] {
+                background-color: #0E0D0B;
+                border: 1px solid #333;
+                border-radius: 10px;
+                padding: 20px;
+            }
+            [data-testid="stMetricLabel"] {
+                color: #F4F2F1;
+                font-size: 16px;
+            }
+            [data-testid="stMetricValue"] {
+                color: #F4F2F1;
+                font-size: 28px;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+    
+    
+    saf_data= data_store()
+    (
+            total_transactions,
+            total_volume,
+            transaction_split,
+            tran_per_hour,
+            fraud_amt,
+            fraud_avg,
+            fraud_count,
+            fraud_hourly_counts,
+            fraud_rate,
+            fraud_rate_per_amount,
+            feature_count,
+            feature_pct,
+            smart_count,
+            smart_pct,
+            legit_amt,
+            legit_avg,
+            peak_hour,
+            peak_hour_counts,
+            amount_dist,
+            fraud_rate_region,
+            fraud_rate_hour,
+            phone_dist,
+            Trans_daily,
+            threshold
+        )= calc(saf_data)
+    def format_number(num):
+        if num >= 1_000_000_000:
+            return f"{num/1_000_000_000:.1f}B"
+        elif num >= 1_000_000:
+            return f"{num/1_000_000:.1f}M"
+        elif num >= 1_000:
+            return f"{num/1_000:.1f}K"
+        return str(num)
+    def format_hour_12(hour):
+        if hour is None:
+            return "N/A"
+        period = "AM" if hour < 12 else "PM"
+        hour_12 = hour % 12
+        if hour_12 == 0:
+            hour_12 = 12
+        return f"{hour_12} {period}"
+    st.markdown("""
+        <style>
+            [data-testid="stMetric"] {
+                background-color: #0E0D0B;
+                border: 1px solid #333;
+                border-radius: 10px;
+                padding: 20px;
+            }
+            [data-testid="stMetricLabel"] {
+                color: #F4F2F1;
+                font-size: 16px;
+            }
+            [data-testid="stMetricValue"] {
+                color: #F4F2F1;
+                font-size: 28px;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+    
+    
+    st.markdown("""
+        <style>
+        [data-testid="stMetricDelta"] svg {
+            display: none;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+    
+    
+    
+    logo_col, space_col, col_region, col_type, col_fraud, col_hour = st.columns(([1, 1, 2, 2, 2, 2]),  vertical_alignment= "center", gap="small")
+    with logo_col:
+        st.image(Path(__file__).parent / "projectlogo.png", width=140)
+        st.markdown("<div style='margin-left: 0px;'></div>", unsafe_allow_html=True)
+        st.markdown("""
+            <h1 style="color: #9E1405; font-family: Orbitron, sans-serif;
+                font-size:20px; margin: -20px 0 0 0; margin: 0; padding: 0;">
+                FINPULSE 
+            </h1>
+        """, unsafe_allow_html=True)
+    with col_region:
+        region_filter = st.multiselect(
+            "Region",
+            options=sorted(saf_data["region"].unique()),
+            default=[],
+            placeholder="Choose Region",
+            label_visibility="collapsed"
+            )
+
+    with col_type:
+        type_filter = st.multiselect(
+            "Transaction Type",
+            options=sorted(saf_data["transaction_type"].unique()),
+            default=[],
+            placeholder="Choose Trxn Type",
+            label_visibility="collapsed"
+        )
+
+    with col_fraud:
+        fraud_filter = st.selectbox(
+            "Fraud Status",
+            options=["Choose Fraud Status", "All", "Fraud only", "Legit only"],
+            label_visibility="collapsed"
+        )
+    with col_hour:
+        hour_filter = st.number_input(
+                "hour 0-23",
+                min_value=0,
+                max_value=23,
+                value=None,
+                placeholder="Enter hour",
+                step=1,
+                label_visibility="collapsed"
+            )
+    filtered_data = saf_data.copy()
+    
+    if region_filter:
+        filtered_data = filtered_data[filtered_data["region"].isin(region_filter)]
+
+    if type_filter:
+        filtered_data = filtered_data[filtered_data["transaction_type"].isin(type_filter)]
+
+    if fraud_filter == "Fraud only":
+        filtered_data = filtered_data[filtered_data["is_fraud"] == 1]
+    elif fraud_filter == "Legit only":
+        filtered_data = filtered_data[filtered_data["is_fraud"] == 0]
+    if hour_filter is not None:
+        filtered_data = filtered_data[filtered_data["hour"] == hour_filter]
+
+    if filtered_data.empty:
+        st.warning("No transactions match the selected filters. Try widening your selection.")
+    (
+            total_transactions_f, total_volume_f, transaction_split_f, tran_per_hour_f,
+            fraud_amt_f, fraud_avg_f, fraud_count_f, fraud_hourly_counts_f,
+            fraud_rate_f, fraud_rate_per_amount_f, feature_count_f, feature_pct_f,
+            smart_count_f, smart_pct_f, legit_amt_f, legit_avg_f, peak_hour_f, peak_hour_counts_f,
+            amount_dist_f, fraud_rate_region_f, fraud_rate_hour_f, phone_dist_f, Trans_daily_f, threshold_f
+    ) = calc(filtered_data)
+
+
+    legit_avg_f = 0 if math.isnan(legit_avg_f) else legit_avg_f
+    fraud_avg_f = 0 if math.isnan(fraud_avg_f) else fraud_avg_f
+    pct_larger = round(((fraud_avg_f - legit_avg_f) / legit_avg_f) * 100, 1) if legit_avg_f != 0 else 0
+    legit_count_f = filtered_data[filtered_data["is_fraud"] == 0].shape[0]
+
+
+    if filtered_data.empty:
+        finding_text = "No data available for this selection."
+    elif legit_count_f == 0 and fraud_count_f > 0:
+        finding_text = (
+            f"🔍 Every transaction in this selection is fraudulent — "
+            f"there are no legitimate transactions to compare against "
+            f"(avg fraud amount: KES {round(fraud_avg_f):,})."
+        )
+    elif pct_larger > 50:
+        finding_text = (
+            f"🔍 Big gap: Fraudulent transactions here run {pct_larger}% larger than legitimate ones "
+            f"(KES {round(fraud_avg_f):,} vs KES {round(legit_avg_f):,}) — high-value transactions are clearly the target for fraud."
+        )
+    elif pct_larger > 0:
+        finding_text = (
+            f"🔍 Fraudulent transactions are modestly larger than legitimate ones in this selection "
+            f"({pct_larger}% more — KES {round(fraud_avg_f):,} vs KES {round(legit_avg_f):,})."
+        )
+    elif fraud_count_f == 0:
+        finding_text = "✅ No fraud detected in this selection — all transactions came back clean."
+    else:
+        finding_text = (
+            f"🔍 Interesting reversal: in this selection, fraudulent transactions are actually "
+            f"smaller on average than legitimate ones (KES {round(fraud_avg_f):,} vs KES {round(legit_avg_f):,})."
+        )
+    if filtered_data.empty:
+        recommendation_text = "No data available for this selection."
+    elif total_transactions_f < 50:
+        recommendation_text = "⚠️ Sample size is small for this selection — treat any pattern here as exploratory, not conclusive."
+    elif fraud_rate_f > 5:
+        recommendation_text = (
+            f"🛡️ Recommendation: Fraud rate here is elevated at {round(fraud_rate_f,2)}%. "
+            f"Consider requiring additional verification (PIN/OTP) for transactions in this segment, "
+            f"especially around hour {peak_hour_f if peak_hour_f is not None else 'N/A'}, where fraud concentrates."
+        )
+    elif fraud_rate_f > 2:
+        recommendation_text = (
+            f"🛡️ Recommendation: Fraud rate ({round(fraud_rate_f,2)}%) is moderate. "
+            f"Monitor this segment and consider flagging transactions above KES {round(legit_avg_f*2):,} for manual review."
+        )
+    else:
+        recommendation_text = (
+            f"✅ Fraud rate is low ({round(fraud_rate_f,2)}%) for this selection — current controls appear effective here."
+        )
+
+    
+
+
+    
+    st.markdown("""
+                    <style>
+                        div[data-testid="stVerticalBlock"]:has(div.st-key-logo_header) div[data-testid="stHorizontalBlock"] {
+                            gap: 0rem;
+                        }
+                    </style>
+                """, unsafe_allow_html=True)
+    st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
+    lef, mid_lef, mid, mid_righ, rig, col = st.columns(6)
+    with lef:
+        st.metric(label= "Total Transactions", 
+        value= f"{total_transactions_f:,}",
+        delta= f"{round(total_transactions_f/total_transactions*100, 1)}% of Total Trxnx"
+        )
+    with mid_lef:
+        st.metric(label= "Total Volume", 
+        value= f"KES {format_number(total_volume_f)}",
+        delta= f"{round(total_volume_f/total_volume*100, 1)}% of Total Value"
+        )
+    with mid:
+        st.metric(label="Fraud Rate", value=f"{round(fraud_rate_f, 2)}%",
+        delta= f"{fraud_count_f} flagged txns",
+        delta_color= "inverse")
+    with mid_righ:
+        st.metric(label= "Avg. legitimate Amount",
+        value= (f"KES {round(legit_avg_f):,}"),
+        delta= "per transaction")
+    with rig:
+       if legit_avg_f == 0:
+            delta_text = "no legitimate txns to compare" if fraud_avg_f > 0 else "no data"
+       else:
+            delta_text = f"{round(fraud_avg_f/legit_avg_f, 2)}x larger than legit"
+       st.metric(label= "Avg. Fraud Amount", 
+       value= (f"KES {round(fraud_avg_f):,}"),
+       delta= delta_text,
+        delta_color= "inverse"
+       )
+    with col:
+        st.metric(label= "Peak Fraud Hour",
+         value= format_hour_12(peak_hour_f),
+         delta= f"Hour {peak_hour_f}--{peak_hour_counts_f} cases",
+         delta_color= "inverse")
+    
+    st.info(f"{finding_text}\n\n{recommendation_text}")
+    st.markdown("-")
+    #GRAPHS
+    #fraude rate per amount
+    
+    fraud_rate_bar= px.bar(
+         fraud_rate_per_amount_f,
+        x= fraud_rate_per_amount_f.index,
+        y= fraud_rate_per_amount_f.values,
+        title= "<b>Fraud rate by transaction amount</b>",
+        color=fraud_rate_per_amount_f.index,
+        color_discrete_sequence=["#2E5EAA"]
+    )
+    #fraud_rate_bar.update_traces(width= 0.45)
+
+    fraud_rate_bar.update_layout(
+        height= 250,
+        showlegend= False,
+        title_font_color= "#E24B4A",
+        margin= dict(t= 40, b= 10, l= 10, r= 10),
+        yaxis= dict(
+            ticksuffix= "%",
+            title= None
+        ),
+        xaxis= dict(
+            title= None,
+            showgrid= False
+        ),
+        #bargap= 0.2
+    )
+    fraud_region= px.bar(
+        fraud_rate_region,
+        x= "region",
+        y= "is_fraud",
+        title= "<b> Fraud Rate Per Region</b>",
+        color= "region",
+        color_discrete_sequence=["#2E5EAA"]
+
+    )
+    #fraud_region.update_traces(width= 0.45)
+    fraud_region.update_layout(
+        title_font_color= "#E24B4A",
+        height= 250,
+        showlegend= False,
+        margin= dict(t= 40, b= 10, l= 10, r= 10),
+        xaxis= dict(
+            showgrid= False,
+            title= None,
+        ),
+        yaxis= dict(
+            range= [2.7, 3],
+            ticksuffix= "%",
+            title= None
+        ),
+        #bargap= 0.1
+    )
+    #transaction split pie
+    label_with_count= [
+        f"{label.upper()} ({value:,})"
+        for label, value in zip(transaction_split_f.index, transaction_split_f.values)
+    ]
+    transaction_split_pie= go.Figure(go.Pie(
+        labels= label_with_count,
+        values= transaction_split_f.values,
+        hole= 0.7,
+        textinfo = "none",
+        marker_colors=["#2E5EAA", "#E8935A", "#1D9E75"]
+    ))
+    transaction_split_pie.update_traces(
+        domain= dict(x=[0.1, 0.9], y=[0.1, 0.9])
+        )
+    transaction_split_pie.update_layout(
+        title= dict(
+                text= "<b>Transaction Type Split</b>",
+                x= 0,
+                y= 0.97,
+                font= dict(color= "#1D9E75")
+                ),
+        
+        height= 250,
+        margin= dict(t= 40, b= 10, l= 10, r= 10),
+        annotations= [dict(
+            text= (f"{transaction_split_f.values.sum():,.0f}txns"),
+            x= 0.5, y= 0.5,
+            font_size= 10,
+            showarrow= False
+
+        )]
+        
+    )
+    #amount distribution graph
+    hourly_tran_bar= px.area(
+        tran_per_hour,
+        x= tran_per_hour.index,
+        y= tran_per_hour.values,
+        title= "Transaction by Hour of the Day",
+        markers= True,
+        color_discrete_sequence= ["#AFF693"]
+    )
+    hourly_tran_bar.update_traces(
+        line= dict(
+            shape= "spline",
+            color= "#1D9E75"
+        )
+    )
+    hourly_tran_bar.update_layout(
+        height= 200,
+        margin= dict(t= 40, b= 10, l= 10, r= 10),
+        xaxis= dict(
+            showgrid= False,
+            title= None,
+            range= [-0.5, 23.5],
+            ticksuffix= "h"
+        ),
+        yaxis= dict(
+            range= [4700, 5200],
+            showgrid= False,
+            title= None,
+            tickformat= "~s"
+        ),
+        title_font_color= "#4A7C6F",
+    )
+    amount_dist_bar= px.bar(
+        amount_dist_f,
+        x= amount_dist_f.index,
+        y= amount_dist_f.values,
+        title= "Amount Distribution",
+        color= amount_dist_f.index,
+        color_discrete_sequence=["#2E5EAA"]
+
+    )
+    #amount_dist_bar.update_traces(width= 0.45)
+    amount_dist_bar.update_layout(
+        height= 250,
+        margin= dict(t= 40, b= 10, l= 10, r= 10),
+        title_font_color= "#1D9E75",
+        showlegend= False,
+        yaxis= dict(
+            title= None
+        ),
+        xaxis= dict(
+            title= None,
+            showgrid= False
+        ),
+        bargap= 0.1
+    )
+
+    #fraude rate per hour + transaction amount per hour
+
+    fig= msp(specs= [[{"secondary_y": True}]])
+    trace = go.Scatter(
+            x=tran_per_hour.index,
+            y=tran_per_hour.values,
+            name="Transactions",
+            mode="lines",
+            fill="tozeroy",
+            line=dict(
+                shape="spline",
+                width=3,
+                color="#1D9E75"
+            ),
+            marker=dict(size=7),
+            hovertemplate="<b>Hour %{x}:00</b><br>Transactions: %{y}<extra></extra>"
+        )
+    
+    fig.add_trace(trace, secondary_y=False)
+    fraud_trace = go.Scatter(
+            x=fraud_rate_hour["hour"],
+            y=fraud_rate_hour["is_fraud"],
+            name="Fraud Rate",
+            mode="lines",
+            line=dict(
+                shape="spline",
+                width=2,
+                color="#E24B4A"
+            ),                        
+            hovertemplate="<b>Hour %{x}:00</b><br>Fraud Rate: %{y:.2f}%<extra></extra>"
+        )
+
+    fig.add_trace(fraud_trace, secondary_y=True)
+    fig.update_layout(
+        title= "Transactions V Fraud Rate by Hour",
+        title_font= dict(color= "#1D9E75"),
+        template= "plotly_dark",
+        hovermode= "x unified",
+
+        legend= dict(
+            orientation= "h",
+            y= 1.08, x= 0.5, 
+            xanchor= "center"
+        ),
+        margin=  dict(t= 40, b= 10, l= 10, r= 10),
+        height= 250
+    )
+    fig.update_yaxes(
+        title= "Transactions",
+        title_font_color= "#1D9E75",
+        range= [4700, 5200],
+        tickformat= "~s",
+        secondary_y= False
+    )
+    fig.update_yaxes(
+        title= "Fraud Rate",
+        title_font= dict(color= "#E24B4A"),
+        ticksuffix= "%",
+        secondary_y= True
+    )
+    fig.update_xaxes(
+        ticksuffix= "h",
+        tickmode= "linear",
+        dtick= 2
+    )
+    #phone distribution bar
+    phone_dist_bar= px.bar(
+        phone_dist,
+        x= "region",
+        y= "count",
+        color="device_type",
+        color_discrete_sequence=["#1D9E75", "#BA7517"],
+        barmode= "stack",
+        title= "FEATURE PHONE VS SMARTPHONE BY REGION"
+    )
+    phone_dist_bar.update_layout(
+        title_font= dict(color= "#BA7517"),
+        showlegend= False,
+        yaxis= dict(
+            title= None,
+            showgrid= False
+        ),
+        xaxis= dict(
+            title= None,
+            showgrid= False
+        )
+    )
+
+    #daily transaction count bar
+    Trans_daily_f["count_label"] = Trans_daily_f["count"].apply(format_number)
+
+    trans_daily_bar = px.bar(
+    Trans_daily_f,
+    x="day",
+    y="count",
+    category_orders={"day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]},
+    title="Transaction Volume By Day",
+    color="day",
+    color_discrete_sequence=["#2E5EAA"],
+    text="count_label"
+    )
+
+    trans_daily_bar.update_traces(
+        textposition="outside",
+        texttemplate="%{text}",
+        textfont=dict(size=11, color="#2E5EAA"),
+        )
+    
+    trans_daily_bar.update_layout(
+        height= 300,
+        margin= dict(t= 40, b= 10, l= 10, r= 10),
+        title_font= dict(color= "#1D9E75"),
+        showlegend= False,
+        yaxis= dict(
+            title= None,
+            showgrid= False,
+            range=[0, Trans_daily_f["count"].max() * 1.15],
+        ),
+        xaxis= dict(
+            title= None,
+            showgrid= False,
+        )
+    )
+        
+    #FRAUD hourly counts bar 
+    colors = {
+            str(hour): "#E24B4A" if count >= threshold_f else "#2E5EAA"
+            for hour, count in zip(fraud_hourly_counts_f["hour"], fraud_hourly_counts_f["count"])
+        }
+    fraud_count_bar= px.bar(
+        fraud_hourly_counts_f,
+        x= "hour",
+        y= "count",
+        title= "Fraud Counts By Hour Of Day",
+        color= fraud_hourly_counts_f["hour"].astype(str),
+        color_discrete_map= colors
+)
+    fraud_count_bar.update_layout(
+        height= 300,
+        margin= dict(t= 40, b= 10, l= 10, r= 10),
+        title_font= dict(color= "#E24B4A"),
+        showlegend= False,
+        yaxis= dict(
+            title= None,
+            showgrid= False
+        ),
+        xaxis= dict(
+            title= None,
+            showgrid= False,
+            dtick= 2
+        )
+    )
+    
+    col, col1, col_c= st.columns(3)
+    with col:
+        with st.container(border= True):
+            st.plotly_chart(amount_dist_bar)
+            
+    with col1:
+        with st.container(border= True):
+             st.plotly_chart(transaction_split_pie)
+            
+    with col_c:
+        with st.container(border= True):
+            st.plotly_chart(fraud_region)
+    st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)  
+    bar_col, area_col= st.columns([0.8, 2.2])
+    with bar_col:
+        with st.container(border= True):
+            st.plotly_chart(fraud_rate_bar)
+
+    with area_col:
+        with st.container(border= True):
+            st.plotly_chart(fig)
+    st.info("📱 Device split insight: Feature phones and smartphones are almost exactly 50/50 (50.3% vs 49.7%) across all regions — showing Mobile penetration across all economic levels. Nakuru has the highest smartphone fraud rate at 3.12%, while Kisumu feature phones are the lowest at 2.68%.")
+    st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)  
+    bar_col2,  bar_col3= st.columns([2, 3])
+
+    #with bar_col1:
+        #with st.container(border= True):
+            #st.plotly_chart(phone_dist_bar)   
+    with bar_col2:
+        with st.container(border= True):
+            st.plotly_chart(trans_daily_bar)
+    with bar_col3:
+        with st.container(border= True):
+            st.plotly_chart(fraud_count_bar)
+   
+    fraud_by_hour = (
+        filtered_data[filtered_data["is_fraud"] == 1]
+        .groupby("hour")
+        .size()
+        .sort_values(ascending=False)
+    )
+    
+    if region_filter:
+        region_label = ", ".join(region_filter)
+    else:
+        region_label = "all regions"
+    
+    if fraud_by_hour.empty:
+        st.info(f"🌙 No fraud cases recorded in {region_label} for this selection.")
+    else:
+        top_hour = fraud_by_hour.index[0]
+        top_count = fraud_by_hour.iloc[0]
+    
+        def fmt_hour(h):
+            suffix = "AM" if h < 12 else "PM"
+            display_h = h % 12
+            display_h = 12 if display_h == 0 else display_h
+            return f"{display_h} {suffix}"
+    
+        if len(fraud_by_hour) > 1:
+            second_hour = fraud_by_hour.index[1]
+            second_count = fraud_by_hour.iloc[1]
+            peak_text = (
+                f"Fraud peaks at {fmt_hour(top_hour)} (hour {top_hour}) with {top_count} cases, "
+                f"followed closely by {fmt_hour(second_hour)} (hour {second_hour}) with {second_count}."
+            )
+        else:
+            peak_text = f"Fraud peaks at {fmt_hour(top_hour)} (hour {top_hour}) with {top_count} cases."
+    
+        is_odd_hour = top_hour < 6 or top_hour >= 23
+        context_note = (
+            " This is an unusual time for legitimate activity, making it a strong fraud signal."
+            if is_odd_hour else
+            " This falls within normal transacting hours, so timing alone isn't a strong signal here."
+        )
+    
+        recommendation = (
+            f" Recommendation: flag transactions in {region_label} around hour {top_hour} "
+            f"for additional verification (PIN/OTP), especially given the concentration of {top_count} cases."
+        )
+    
+        st.info(f"finding🔍 — {region_label}: {peak_text}{context_note}{recommendation}")
+show_home()
