@@ -25,19 +25,7 @@ def format_hour_12(hour):
 def render_kpis(total_transactions_f, total_transactions, total_volume_f, total_volume,
                  fraud_rate_f, fraud_count_f, legit_avg_f, fraud_avg_f,
                  peak_hour_f, peak_hour_counts_f):
-    st.markdown("""
-    <style>
-        [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlockBorderWrapper"] {
-            padding-top: 0rem;
-        }
-        .block-container {
-            padding-top: 0.5rem;
-        }
-        div[data-testid="stHorizontalBlock"] {
-            margin-top: -2rem;
-        }
-    </style>
-""", unsafe_allow_html=True) 
+    
     st.markdown("""
         <style>
             [data-testid="stMetric"] {
