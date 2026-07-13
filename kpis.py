@@ -1,7 +1,31 @@
 # kpis.py
 import streamlit as st
 
-st.markdown("""
+
+def format_number(num):
+    if num >= 1_000_000_000:
+        return f"{num/1_000_000_000:.1f}B"
+    elif num >= 1_000_000:
+        return f"{num/1_000_000:.1f}M"
+    elif num >= 1_000:
+        return f"{num/1_000:.1f}K"
+    return str(num)
+
+
+def format_hour_12(hour):
+    if hour is None:
+        return "N/A"
+    period = "AM" if hour < 12 else "PM"
+    hour_12 = hour % 12
+    if hour_12 == 0:
+        hour_12 = 12
+    return f"{hour_12} {period}"
+
+
+def render_kpis(total_transactions_f, total_transactions, total_volume_f, total_volume,
+                 fraud_rate_f, fraud_count_f, legit_avg_f, fraud_avg_f,
+                 peak_hour_f, peak_hour_counts_f):
+    st.markdown("""
     <style>
         [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlockBorderWrapper"] {
             padding-top: 0rem;
@@ -34,29 +58,6 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
     
-def format_number(num):
-    if num >= 1_000_000_000:
-        return f"{num/1_000_000_000:.1f}B"
-    elif num >= 1_000_000:
-        return f"{num/1_000_000:.1f}M"
-    elif num >= 1_000:
-        return f"{num/1_000:.1f}K"
-    return str(num)
-
-
-def format_hour_12(hour):
-    if hour is None:
-        return "N/A"
-    period = "AM" if hour < 12 else "PM"
-    hour_12 = hour % 12
-    if hour_12 == 0:
-        hour_12 = 12
-    return f"{hour_12} {period}"
-
-
-def render_kpis(total_transactions_f, total_transactions, total_volume_f, total_volume,
-                 fraud_rate_f, fraud_count_f, legit_avg_f, fraud_avg_f,
-                 peak_hour_f, peak_hour_counts_f):
     lef, mid_lef, mid, mid_righ, rig, col = st.columns(6)
 
     with lef:
