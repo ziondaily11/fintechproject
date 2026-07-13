@@ -33,39 +33,6 @@ st.set_page_config(
 
 
 def show_home():
-    st.markdown("""
-    <style>
-        [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlockBorderWrapper"] {
-            padding-top: 0rem;
-        }
-        .block-container {
-            padding-top: 0.5rem;
-        }
-        div[data-testid="stHorizontalBlock"] {
-            margin-top: -2rem;
-        }
-    </style>
-""", unsafe_allow_html=True) 
-    st.markdown("""
-        <style>
-            [data-testid="stMetric"] {
-                background-color: #FFFCFA;
-                border: 1px solid #333;
-                border-radius: 10px;
-                padding: 20px;
-            }
-            [data-testid="stMetricLabel"] {
-                color: #F4F2F1;
-                font-size: 16px;
-            }
-            [data-testid="stMetricValue"] {
-                color: #F4F2F1;
-                font-size: 28px;
-            }
-        </style>
-    """, unsafe_allow_html=True)
-
-    
     saf_data = data_store()
     (
         total_transactions,

@@ -1,7 +1,39 @@
 # kpis.py
 import streamlit as st
 
+st.markdown("""
+    <style>
+        [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlockBorderWrapper"] {
+            padding-top: 0rem;
+        }
+        .block-container {
+            padding-top: 0.5rem;
+        }
+        div[data-testid="stHorizontalBlock"] {
+            margin-top: -2rem;
+        }
+    </style>
+""", unsafe_allow_html=True) 
+    st.markdown("""
+        <style>
+            [data-testid="stMetric"] {
+                background-color: #FFFCFA;
+                border: 1px solid #333;
+                border-radius: 10px;
+                padding: 20px;
+            }
+            [data-testid="stMetricLabel"] {
+                color:  #FFFCFA;
+                font-size: 16px;
+            }
+            [data-testid="stMetricValue"] {
+                color:  #FFFCFA;
+                font-size: 28px;
+            }
+        </style>
+    """, unsafe_allow_html=True)
 
+    
 def format_number(num):
     if num >= 1_000_000_000:
         return f"{num/1_000_000_000:.1f}B"
