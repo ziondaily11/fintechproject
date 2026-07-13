@@ -213,6 +213,6 @@ def show_home():
     with st.container(border= True):
         st.caption("Sample dataset")
         st.dataframe(saf_data.head(100))
-    
+        st.info(Follow me on X- TheeAnalyst_ke)
 
 show_home()
