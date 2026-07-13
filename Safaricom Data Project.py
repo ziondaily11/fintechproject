@@ -210,7 +210,9 @@ def show_home():
         with bar_col3:
                 st.plotly_chart(fraud_count_bar)
     render_hourly_finding(filtered_data, region_filter)
-    
+    with st.container(border= True):
+        st.caption("Sample dataset")
+        st.dataframe(saf_data.head(100))
     
 
 show_home()
