@@ -47,11 +47,11 @@ def render_kpis(total_transactions_f, total_transactions, total_volume_f, total_
                 padding: 20px;
             }
             [data-testid="stMetricLabel"] {
-                color:  #FFFCFA;
+                color:  #2B00D9;
                 font-size: 16px;
             }
             [data-testid="stMetricValue"] {
-                color:  #FFFCFA;
+                color:  #2B00D9;
                 font-size: 28px;
             }
         </style>
