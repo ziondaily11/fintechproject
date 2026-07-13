@@ -29,17 +29,17 @@ def render_kpis(total_transactions_f, total_transactions, total_volume_f, total_
     st.markdown("""
         <style>
             [data-testid="stMetric"] {
-                background-color: #FFFCFA;
+                background-color: #0E0D0B;
                 border: 1px solid #333;
                 border-radius: 10px;
                 padding: 20px;
             }
             [data-testid="stMetricLabel"] {
-                color:  #2E5EAA;
+                color:  #FFFCFA;
                 font-size: 16px;
             }
             [data-testid="stMetricValue"] {
-                color:  #2E5EAA;
+                color:  #FFFCFA;
                 font-size: 28px;
             }
         </style>
